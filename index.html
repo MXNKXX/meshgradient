@@ -5,100 +5,61 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mesh Gradient Designer</title>
 <style>
-/* ── Reset & Variables ───────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg:           #0f0f11;
-  --panel:        #1a1a1e;
-  --panel2:       #222228;
-  --panel3:       #2a2a32;
-  --border:       #2c2c34;
-  --border2:      #38383f;
-  --text:         #e8e8f0;
-  --text2:        #8888a0;
-  --text3:        #55556a;
-  --accent:       #6c63ff;
-  --accent2:      #9088ff;
-  --danger:       #ff4455;
-  --success:      #22cc77;
-  --warn:         #ffaa00;
-  --input-bg:     #13131a;
-  --radius:       6px;
-  --radius2:      10px;
-  --panel-w:      244px;
+  --bg:        #0f0f11;
+  --panel:     #1a1a1e;
+  --panel2:    #222228;
+  --panel3:    #2a2a32;
+  --border:    #2c2c34;
+  --border2:   #38383f;
+  --text:      #e8e8f0;
+  --text2:     #8888a0;
+  --text3:     #55556a;
+  --accent:    #6c63ff;
+  --accent2:   #9088ff;
+  --danger:    #ff4455;
+  --success:   #22cc77;
+  --input-bg:  #13131a;
+  --radius:    6px;
+  --panel-w:   256px;
 }
 
-html, body {
-  height: 100%;
-  overflow: hidden;
-}
-
+html, body { height: 100%; overflow: hidden; }
 body {
-  background: var(--bg);
-  color: var(--text);
+  background: var(--bg); color: var(--text);
   font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', system-ui, sans-serif;
-  font-size: 12px;
-  line-height: 1.4;
-  display: flex;
-  flex-direction: column;
-  user-select: none;
-  -webkit-user-select: none;
+  font-size: 12px; line-height: 1.4;
+  display: flex; flex-direction: column;
+  user-select: none; -webkit-user-select: none;
 }
-
-/* ── Scrollbars ────────────────────────────────────────────────── */
-::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 4px; }
 
-/* ── Topbar ────────────────────────────────────────────────────── */
+/* ── Topbar ── */
 .topbar {
-  height: 46px;
-  min-height: 46px;
-  background: var(--panel);
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  padding: 0 14px;
-  gap: 10px;
-  z-index: 200;
+  height: 46px; min-height: 46px;
+  background: var(--panel); border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; padding: 0 14px; gap: 10px; z-index: 200;
 }
 .app-logo {
-  width: 26px; height: 26px;
-  border-radius: 7px;
-  background: linear-gradient(135deg, #6c63ff 0%, #ff63a5 60%, #ffbb44 100%);
-  flex-shrink: 0;
-  box-shadow: 0 2px 8px rgba(108,99,255,0.4);
+  width: 26px; height: 26px; border-radius: 7px; flex-shrink: 0;
+  background: linear-gradient(135deg,#6c63ff 0%,#ff63a5 60%,#ffbb44 100%);
+  box-shadow: 0 2px 8px rgba(108,99,255,.4);
 }
-.app-name {
-  font-size: 13px; font-weight: 600;
-  color: var(--text);
-  letter-spacing: -0.3px;
-  margin-right: 4px;
-}
-.topbar-sep {
-  width: 1px; height: 20px;
-  background: var(--border);
-  flex-shrink: 0;
-}
+.app-name { font-size: 13px; font-weight: 600; letter-spacing: -.3px; margin-right: 4px; }
+.topbar-sep { width: 1px; height: 20px; background: var(--border); flex-shrink: 0; }
 .tool-group {
-  display: flex;
-  background: var(--input-bg);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 2px;
-  gap: 1px;
+  display: flex; background: var(--input-bg);
+  border: 1px solid var(--border); border-radius: var(--radius); padding: 2px; gap: 1px;
 }
 .tool-btn {
   display: flex; align-items: center; gap: 5px;
-  background: none; border: none;
-  color: var(--text2);
-  cursor: pointer;
-  padding: 4px 10px;
-  border-radius: 4px;
-  font-size: 11px; font-weight: 500;
-  transition: all 0.15s;
-  white-space: nowrap;
+  background: none; border: none; color: var(--text2);
+  cursor: pointer; padding: 4px 10px; border-radius: 4px;
+  font-size: 11px; font-weight: 500; transition: all .15s; white-space: nowrap;
 }
 .tool-btn:hover { background: var(--border); color: var(--text); }
 .tool-btn.active { background: var(--accent); color: #fff; }
@@ -106,164 +67,131 @@ body {
 .topbar-right { margin-left: auto; display: flex; align-items: center; gap: 8px; }
 .kbd {
   background: var(--panel3); border: 1px solid var(--border2);
-  border-radius: 3px; padding: 1px 5px;
-  font-size: 9px; color: var(--text3);
-  font-family: monospace;
+  border-radius: 3px; padding: 1px 5px; font-size: 9px; color: var(--text3); font-family: monospace;
 }
 
-/* ── Workspace ─────────────────────────────────────────────────── */
-.workspace {
-  flex: 1; min-height: 0;
-  display: flex;
-  overflow: hidden;
-}
+/* ── Workspace ── */
+.workspace { flex: 1; min-height: 0; display: flex; overflow: hidden; }
 
-/* ── Panels ────────────────────────────────────────────────────── */
+/* ── Panels ── */
 .panel {
-  width: var(--panel-w);
-  min-width: var(--panel-w);
-  max-width: var(--panel-w);
-  background: var(--panel);
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-  overflow-x: hidden;
+  width: var(--panel-w); min-width: var(--panel-w); max-width: var(--panel-w);
+  background: var(--panel); display: flex; flex-direction: column;
+  overflow-y: auto; overflow-x: hidden;
 }
 .panel.left  { border-right: 1px solid var(--border); }
 .panel.right { border-left:  1px solid var(--border); }
 
-.section { border-bottom: 1px solid var(--border); }
+.section { border-bottom: 1px solid var(--border); flex-shrink: 0; }
 .section-hdr {
   display: flex; align-items: center; justify-content: space-between;
-  padding: 9px 14px 7px;
-  cursor: pointer;
-  font-size: 10px; font-weight: 600;
-  color: var(--text3);
-  text-transform: uppercase;
-  letter-spacing: 0.9px;
+  padding: 9px 14px 7px; cursor: pointer;
+  font-size: 10px; font-weight: 600; color: var(--text3);
+  text-transform: uppercase; letter-spacing: .9px;
 }
 .section-hdr:hover { color: var(--text2); }
-.section-hdr .chev { transition: transform 0.2s; color: var(--text3); font-size: 8px; }
+.section-hdr .chev { transition: transform .2s; font-size: 8px; color: var(--text3); }
 .section-hdr.collapsed .chev { transform: rotate(-90deg); }
-.section-body { padding: 2px 14px 13px; }
+.section-body { padding: 4px 14px 14px; }
 .section-body.hidden { display: none; }
 
-/* ── Form primitives ───────────────────────────────────────────── */
-.f-label {
-  display: block;
-  font-size: 10px; font-weight: 500;
-  color: var(--text3);
-  margin-bottom: 4px;
-  letter-spacing: 0.2px;
+.panel-spacer { flex: 1; }
+.panel-footer {
+  flex-shrink: 0;
+  padding: 11px 14px;
+  border-top: 1px solid var(--border);
+  font-size: 9px; font-weight: 700;
+  color: var(--text3); letter-spacing: 1.8px;
+  text-transform: uppercase;
+  text-align: center;
 }
+
+/* ── Form ── */
+.f-label { display: block; font-size: 10px; font-weight: 500; color: var(--text3); margin-bottom: 4px; letter-spacing: .2px; }
 .f-row { display: flex; gap: 6px; align-items: flex-end; margin-bottom: 8px; }
 .f-field { flex: 1; }
 
-input[type="number"],
-input[type="text"] {
+input[type="number"], input[type="text"] {
   display: block; width: 100%;
-  background: var(--input-bg);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  color: var(--text);
-  font-size: 12px;
-  padding: 5px 8px;
-  outline: none;
-  transition: border-color 0.15s;
-  -moz-appearance: textfield;
+  background: var(--input-bg); border: 1px solid var(--border); border-radius: var(--radius);
+  color: var(--text); font-size: 12px; padding: 5px 8px; outline: none;
+  transition: border-color .15s; -moz-appearance: textfield;
 }
 input[type="number"]::-webkit-inner-spin-button { display: none; }
-input[type="number"]:focus,
-input[type="text"]:focus { border-color: var(--accent); }
+input[type="number"]:focus, input[type="text"]:focus { border-color: var(--accent); }
 
-/* range */
-.sl-row {
-  display: flex; align-items: center; gap: 7px;
-  margin-bottom: 8px;
-}
-.sl-label { color: var(--text2); font-size: 10px; width: 64px; flex-shrink: 0; }
+.sl-row { display: flex; align-items: center; gap: 7px; margin-bottom: 8px; }
+.sl-label { color: var(--text2); font-size: 10px; width: 60px; flex-shrink: 0; }
 .sl-wrap { flex: 1; }
 input[type="range"] {
   -webkit-appearance: none; appearance: none;
-  width: 100%; height: 3px;
-  background: var(--panel3);
-  border-radius: 3px; outline: none; cursor: pointer;
+  width: 100%; height: 3px; background: var(--panel3); border-radius: 3px; outline: none; cursor: pointer;
 }
 input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none; appearance: none;
-  width: 13px; height: 13px;
-  background: #fff; border-radius: 50%;
-  border: 2px solid var(--accent);
-  box-shadow: 0 1px 4px rgba(0,0,0,0.5);
-  transition: transform 0.1s;
+  width: 13px; height: 13px; background: #fff; border-radius: 50%;
+  border: 2px solid var(--accent); box-shadow: 0 1px 4px rgba(0,0,0,.5); transition: transform .1s;
 }
 input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.2); }
 .sl-val {
-  color: var(--text2); font-size: 10px;
-  width: 32px; text-align: right; flex-shrink: 0;
-  font-variant-numeric: tabular-nums;
-  font-family: 'SF Mono', monospace;
+  color: var(--text2); font-size: 10px; width: 30px; text-align: right; flex-shrink: 0;
+  font-variant-numeric: tabular-nums; font-family: 'SF Mono', monospace;
 }
 
-/* toggle switch */
-.tog-row {
-  display: flex; align-items: center;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
+.tog-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
 .tog-label { color: var(--text2); font-size: 11px; }
 .sw { position: relative; display: inline-block; width: 30px; height: 17px; flex-shrink: 0; }
 .sw input { display: none; }
-.sw-track {
-  position: absolute; inset: 0;
-  background: var(--panel3); border-radius: 17px;
-  transition: 0.2s; cursor: pointer;
-}
-.sw-track::before {
-  content: ''; position: absolute;
-  width: 11px; height: 11px;
-  left: 3px; top: 3px;
-  background: #fff; border-radius: 50%;
-  transition: 0.2s;
-}
+.sw-track { position: absolute; inset: 0; background: var(--panel3); border-radius: 17px; transition: .2s; cursor: pointer; }
+.sw-track::before { content: ''; position: absolute; width: 11px; height: 11px; left: 3px; top: 3px; background: #fff; border-radius: 50%; transition: .2s; }
 .sw input:checked + .sw-track { background: var(--accent); }
 .sw input:checked + .sw-track::before { transform: translateX(13px); }
 
-/* buttons */
 .btn {
-  display: inline-flex; align-items: center; justify-content: center;
-  gap: 5px;
-  padding: 6px 11px; border-radius: var(--radius);
-  border: none; cursor: pointer;
-  font-size: 11px; font-weight: 500;
-  transition: all 0.15s; white-space: nowrap;
+  display: inline-flex; align-items: center; justify-content: center; gap: 5px;
+  padding: 6px 11px; border-radius: var(--radius); border: none; cursor: pointer;
+  font-size: 11px; font-weight: 500; transition: all .15s; white-space: nowrap;
 }
 .btn svg { width: 11px; height: 11px; flex-shrink: 0; }
-.btn-primary  { background: var(--accent); color: #fff; }
-.btn-primary:hover  { background: var(--accent2); }
-.btn-second   { background: var(--panel2); color: var(--text); border: 1px solid var(--border2); }
-.btn-second:hover   { background: var(--panel3); }
-.btn-ghost    { background: none; color: var(--text2); border: 1px solid var(--border); }
-.btn-ghost:hover    { color: var(--text); border-color: var(--border2); }
-.btn-danger   { background: none; color: var(--danger); border: 1px solid rgba(255,68,85,.25); }
-.btn-danger:hover   { background: rgba(255,68,85,.1); }
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-primary:hover { background: var(--accent2); }
+.btn-second { background: var(--panel2); color: var(--text); border: 1px solid var(--border2); }
+.btn-second:hover { background: var(--panel3); }
+.btn-ghost { background: none; color: var(--text2); border: 1px solid var(--border); }
+.btn-ghost:hover { color: var(--text); border-color: var(--border2); }
 .btn-sm { padding: 4px 8px; font-size: 10px; }
-.btn-w  { width: 100%; margin-bottom: 6px; }
+.btn-w { width: 100%; margin-bottom: 6px; }
 .btn-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 6px; }
 
-/* ── Color Palette ─────────────────────────────────────────────── */
-.color-hero {
-  display: flex; gap: 8px; align-items: stretch;
-  margin-bottom: 9px;
+/* ── Canvas presets ── */
+.preset-row { display: flex; gap: 5px; margin-bottom: 8px; }
+.preset-btn {
+  flex: 1; padding: 5px 2px; border-radius: var(--radius);
+  background: var(--panel2); border: 1px solid var(--border);
+  color: var(--text2); font-size: 10px; font-weight: 500;
+  cursor: pointer; transition: all .15s; text-align: center;
 }
+.preset-btn:hover { border-color: var(--border2); color: var(--text); }
+.preset-btn.active { background: rgba(108,99,255,.18); border-color: var(--accent); color: var(--accent2); }
+
+.orient-row { display: flex; gap: 5px; margin-bottom: 10px; }
+.orient-btn {
+  flex: 1; padding: 5px 4px; border-radius: var(--radius);
+  background: var(--panel2); border: 1px solid var(--border);
+  color: var(--text2); font-size: 10px; font-weight: 500;
+  cursor: pointer; transition: all .15s; text-align: center;
+  display: flex; align-items: center; justify-content: center; gap: 4px;
+}
+.orient-btn:hover { border-color: var(--border2); color: var(--text); }
+.orient-btn.active { background: rgba(108,99,255,.18); border-color: var(--accent); color: var(--accent2); }
+.orient-btn svg { width: 11px; height: 11px; }
+
+/* ── Color picker ── */
+.color-hero { display: flex; gap: 8px; align-items: stretch; margin-bottom: 9px; }
 .swatch-big {
-  width: 46px; height: 46px;
-  border-radius: var(--radius);
-  border: 2px solid var(--border2);
-  cursor: pointer;
-  position: relative; overflow: hidden;
-  flex-shrink: 0;
-  transition: border-color 0.15s;
+  width: 46px; height: 46px; border-radius: var(--radius);
+  border: 2px solid var(--border2); cursor: pointer;
+  position: relative; overflow: hidden; flex-shrink: 0; transition: border-color .15s;
 }
 .swatch-big:hover { border-color: var(--accent); }
 .swatch-big input[type="color"] {
@@ -272,288 +200,186 @@ input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.2); }
   opacity: 0; cursor: pointer; border: none; padding: 0;
 }
 .hex-wrap { flex: 1; }
-.hex-inp {
-  font-family: 'SF Mono', 'Fira Code', monospace !important;
-  font-size: 13px !important; letter-spacing: 1px;
-  text-transform: uppercase;
-}
-.rgb-grid {
-  display: grid; grid-template-columns: 1fr 1fr 1fr;
-  gap: 5px; margin-bottom: 9px;
-}
+.hex-inp { font-family: 'SF Mono','Fira Code',monospace !important; font-size: 13px !important; letter-spacing: 1px; text-transform: uppercase; }
+.rgb-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 5px; margin-bottom: 10px; }
 .rgb-wrap { position: relative; }
-.rgb-ch {
-  position: absolute; left: 6px; top: 50%; transform: translateY(-50%);
-  font-size: 9px; font-weight: 700; color: var(--text3);
-  pointer-events: none;
-}
+.rgb-ch { position: absolute; left: 6px; top: 50%; transform: translateY(-50%); font-size: 9px; font-weight: 700; color: var(--text3); pointer-events: none; }
 .rgb-inp { padding-left: 17px !important; text-align: right; }
 
-.pal-row {
-  display: flex; flex-wrap: wrap; gap: 5px;
-  padding-top: 4px;
-}
+/* saved palette */
+.saved-pal { display: flex; flex-wrap: wrap; gap: 5px; padding-top: 4px; }
+.pal-wrap { position: relative; width: 22px; height: 22px; flex-shrink: 0; }
 .pal-sw {
   width: 22px; height: 22px; border-radius: 4px;
-  cursor: pointer; border: 2px solid transparent;
-  transition: all 0.15s; flex-shrink: 0;
+  cursor: pointer; border: 2px solid transparent; transition: all .15s;
 }
 .pal-sw:hover { transform: scale(1.1); border-color: rgba(255,255,255,.25); }
 .pal-sw.active { border-color: #fff; transform: scale(1.12); }
+.pal-del {
+  position: absolute; top: -5px; right: -5px;
+  width: 13px; height: 13px; border-radius: 50%;
+  background: var(--danger); border: 1.5px solid var(--panel);
+  color: #fff; font-size: 9px; line-height: 1;
+  display: none; align-items: center; justify-content: center;
+  cursor: pointer; z-index: 10; font-weight: 700; padding: 0;
+}
+.pal-wrap:hover .pal-del { display: flex; }
 .pal-add {
   width: 22px; height: 22px; border-radius: 4px;
   background: var(--panel3); border: 1.5px dashed var(--border2);
   cursor: pointer; display: flex; align-items: center; justify-content: center;
-  color: var(--text3); font-size: 15px; line-height: 1;
-  transition: all 0.15s; flex-shrink: 0;
+  color: var(--text3); font-size: 15px; line-height: 1; transition: all .15s; flex-shrink: 0;
 }
 .pal-add:hover { border-color: var(--accent); color: var(--accent); }
 
-/* ── Presets ───────────────────────────────────────────────────── */
-.chips { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 9px; }
-.chip {
-  padding: 3px 8px; border-radius: 20px;
-  background: var(--panel2); border: 1px solid var(--border);
-  color: var(--text2); font-size: 10px;
-  cursor: pointer; transition: all 0.15s; white-space: nowrap;
-}
-.chip:hover { border-color: var(--accent); color: var(--accent); }
-
-/* ── Canvas Area ───────────────────────────────────────────────── */
+/* ── Canvas Area ── */
 .canvas-area {
-  flex: 1; min-width: 0;
-  background: #09090c;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
+  flex: 1; min-width: 0; background: #09090c;
+  display: flex; align-items: center; justify-content: center;
   position: relative; overflow: hidden;
 }
-/* checkerboard bg */
 .canvas-area::before {
-  content: '';
-  position: absolute; inset: 0;
+  content: ''; position: absolute; inset: 0;
   background-image:
-    linear-gradient(45deg, #111114 25%, transparent 25%),
-    linear-gradient(-45deg, #111114 25%, transparent 25%),
-    linear-gradient(45deg, transparent 75%, #111114 75%),
-    linear-gradient(-45deg, transparent 75%, #111114 75%);
+    linear-gradient(45deg,#111114 25%,transparent 25%),
+    linear-gradient(-45deg,#111114 25%,transparent 25%),
+    linear-gradient(45deg,transparent 75%,#111114 75%),
+    linear-gradient(-45deg,transparent 75%,#111114 75%);
   background-size: 20px 20px;
-  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
-  opacity: 0.5;
-  pointer-events: none;
+  background-position: 0 0,0 10px,10px -10px,-10px 0;
+  opacity: .5; pointer-events: none;
 }
 .canvas-wrap {
   position: relative;
-  box-shadow: 0 8px 48px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,.05);
+  box-shadow: 0 8px 48px rgba(0,0,0,.7),0 0 0 1px rgba(255,255,255,.05);
 }
 #glCanvas { display: block; }
-#grainCanvas {
-  position: absolute; top: 0; left: 0;
-  pointer-events: none;
-  mix-blend-mode: overlay;
-}
-.pickers-layer {
-  position: absolute; top: 0; left: 0;
-  width: 100%; height: 100%;
-  pointer-events: none;
-}
+#grainCanvas { position: absolute; top: 0; left: 0; pointer-events: none; mix-blend-mode: overlay; }
+.pickers-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
 
-/* Pickers */
 .picker {
-  position: absolute;
-  width: 18px; height: 18px;
-  border-radius: 50%;
-  border: 2.5px solid rgba(255,255,255,0.9);
-  box-shadow: 0 0 0 1.5px rgba(0,0,0,0.5), 0 2px 7px rgba(0,0,0,0.6);
-  transform: translate(-50%, -50%);
-  cursor: grab;
-  pointer-events: all;
-  transition: box-shadow 0.12s, transform 0.12s;
-  z-index: 10;
+  position: absolute; width: 18px; height: 18px; border-radius: 50%;
+  border: 2.5px solid rgba(255,255,255,.9);
+  box-shadow: 0 0 0 1.5px rgba(0,0,0,.5),0 2px 7px rgba(0,0,0,.6);
+  transform: translate(-50%,-50%); cursor: grab; pointer-events: all;
+  transition: box-shadow .12s,transform .12s; z-index: 10;
 }
-.picker:hover {
-  box-shadow: 0 0 0 2px rgba(255,255,255,.7), 0 2px 9px rgba(0,0,0,.7);
-  transform: translate(-50%,-50%) scale(1.18);
-}
-.picker.selected {
-  border-color: #fff;
-  box-shadow: 0 0 0 2.5px var(--accent), 0 2px 9px rgba(0,0,0,.7);
-  transform: translate(-50%,-50%) scale(1.22);
-  z-index: 20;
-}
+.picker:hover { box-shadow: 0 0 0 2px rgba(255,255,255,.7),0 2px 9px rgba(0,0,0,.7); transform: translate(-50%,-50%) scale(1.18); }
+.picker.selected { border-color: #fff; box-shadow: 0 0 0 2.5px var(--accent),0 2px 9px rgba(0,0,0,.7); transform: translate(-50%,-50%) scale(1.22); z-index: 20; }
 .picker:active { cursor: grabbing; }
 
-/* HUD */
 .canvas-hud {
-  position: absolute; bottom: 14px; left: 50%;
-  transform: translateX(-50%);
-  background: rgba(0,0,0,.65);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  color: var(--text2); font-size: 10px;
-  padding: 4px 12px; border-radius: 20px;
-  border: 1px solid rgba(255,255,255,.07);
-  pointer-events: none; white-space: nowrap;
+  position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%);
+  background: rgba(0,0,0,.65); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  color: var(--text2); font-size: 10px; padding: 4px 12px; border-radius: 20px;
+  border: 1px solid rgba(255,255,255,.07); pointer-events: none; white-space: nowrap;
 }
 .mode-badge {
-  position: absolute; top: 14px; left: 50%;
-  transform: translateX(-50%);
-  background: var(--accent);
-  color: #fff; font-size: 10px; font-weight: 600;
-  padding: 3px 10px; border-radius: 20px;
-  pointer-events: none; white-space: nowrap;
-  opacity: 0; transition: opacity 0.2s;
+  position: absolute; top: 14px; left: 50%; transform: translateX(-50%);
+  background: var(--accent); color: #fff; font-size: 10px; font-weight: 600;
+  padding: 3px 10px; border-radius: 20px; pointer-events: none; white-space: nowrap;
+  opacity: 0; transition: opacity .2s;
 }
 .mode-badge.visible { opacity: 1; }
 .rec-badge {
   position: absolute; top: 14px; right: 14px;
-  background: rgba(220, 30, 50, 0.85);
-  backdrop-filter: blur(8px);
+  background: rgba(220,30,50,.85); backdrop-filter: blur(8px);
   color: #fff; font-size: 10px; font-weight: 600;
   padding: 4px 10px; border-radius: 20px;
-  display: none; align-items: center; gap: 5px;
-  z-index: 50;
+  display: none; align-items: center; gap: 5px; z-index: 50;
 }
-.rec-dot {
-  width: 7px; height: 7px; border-radius: 50%;
-  background: #fff;
-  animation: blink 0.8s ease-in-out infinite;
-}
+.rec-dot { width: 7px; height: 7px; border-radius: 50%; background: #fff; animation: blink .8s ease-in-out infinite; }
+.rec-progress { position: absolute; bottom: 0; left: 0; height: 3px; background: var(--danger); transition: width .1s linear; }
 
-/* ── Points List ───────────────────────────────────────────────── */
-.pt-list { display: flex; flex-direction: column; gap: 3px; }
+/* ── Points list ── */
+.pt-list { display: flex; flex-direction: column; gap: 2px; }
 .pt-item {
   display: flex; align-items: center; gap: 7px;
   padding: 5px 7px; border-radius: var(--radius);
-  cursor: pointer; border: 1px solid transparent;
-  transition: all 0.12s;
+  cursor: pointer; border: 1px solid transparent; transition: all .12s;
 }
 .pt-item:hover { background: var(--panel2); }
 .pt-item.sel { background: var(--panel2); border-color: var(--border2); }
-.pt-sw { width: 18px; height: 18px; border-radius: 4px; flex-shrink: 0; border: 1px solid rgba(255,255,255,.1); }
-.pt-label { flex: 1; color: var(--text2); font-size: 11px; }
-.pt-hex { color: var(--text3); font-size: 9px; font-family: monospace; }
+.pt-sw {
+  width: 22px; height: 22px; border-radius: 5px; flex-shrink: 0;
+  border: 1.5px solid rgba(255,255,255,.12); cursor: pointer;
+  position: relative; overflow: hidden;
+}
+.pt-sw input[type="color"] {
+  position: absolute; inset: -4px;
+  width: calc(100% + 8px); height: calc(100% + 8px);
+  opacity: 0; cursor: pointer; border: none; padding: 0;
+}
+.pt-hex-inp {
+  flex: 1; background: transparent; border: none; border-bottom: 1px solid transparent;
+  color: var(--text2); font-size: 10px; font-family: 'SF Mono',monospace;
+  padding: 2px 3px; outline: none; letter-spacing: .5px; text-transform: uppercase;
+  transition: border-color .15s,color .15s; min-width: 0;
+}
+.pt-hex-inp:focus { border-bottom-color: var(--accent); color: var(--text); }
+.pt-hex-inp:hover { color: var(--text); }
 .pt-del {
-  background: none; border: none; cursor: pointer;
-  color: var(--text3); padding: 1px 3px; border-radius: 3px;
-  font-size: 14px; line-height: 1;
+  background: none; border: none; cursor: pointer; color: var(--text3);
+  padding: 2px 4px; border-radius: 3px; font-size: 13px; line-height: 1;
   display: flex; align-items: center; justify-content: center;
-  opacity: 0; transition: all 0.12s;
+  opacity: 0; transition: all .12s; flex-shrink: 0;
 }
 .pt-item:hover .pt-del { opacity: 1; }
 .pt-del:hover { color: var(--danger); }
 
-/* ── Anim ──────────────────────────────────────────────────────── */
-.anim-live {
-  display: flex; align-items: center; gap: 6px;
-  color: var(--text3); font-size: 10px; margin-top: 4px;
-}
-.anim-dot {
-  width: 6px; height: 6px; border-radius: 50%;
-  background: var(--success);
-  animation: blink 1s ease-in-out infinite;
-}
+.anim-live { display: flex; align-items: center; gap: 6px; color: var(--text3); font-size: 10px; margin-top: 4px; }
+.anim-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--success); animation: blink 1s ease-in-out infinite; }
 
-/* ── Select ────────────────────────────────────────────────────── */
 select {
   display: block; width: 100%;
-  background: var(--input-bg);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  color: var(--text); font-size: 11px;
-  padding: 5px 8px; outline: none; cursor: pointer;
+  background: var(--input-bg); border: 1px solid var(--border); border-radius: var(--radius);
+  color: var(--text); font-size: 11px; padding: 5px 8px; outline: none; cursor: pointer;
   appearance: none; -webkit-appearance: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23555566' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 8px center;
-  padding-right: 24px;
+  background-repeat: no-repeat; background-position: right 8px center; padding-right: 24px;
 }
 select:focus { border-color: var(--accent); }
 
-/* ── Misc ──────────────────────────────────────────────────────── */
-.empty-hint { color: var(--text3); font-size: 10px; padding: 4px 0; }
+.hint { color: var(--text3); font-size: 9px; line-height: 1.6; margin-top: 2px; }
+.empty-hint { color: var(--text3); font-size: 10px; padding: 4px 0 2px; }
 
-@keyframes blink {
-  0%,100% { opacity: 1; }
-  50% { opacity: 0.35; }
-}
-
-/* progress bar for recording */
-.rec-progress {
-  position: absolute; bottom: 0; left: 0;
-  height: 3px; background: var(--danger);
-  transition: width 0.1s linear;
-}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.35} }
 </style>
 </head>
 <body>
 
-<!-- ── Topbar ────────────────────────────────────────────────────── -->
+<!-- Topbar -->
 <header class="topbar">
   <div class="app-logo"></div>
   <span class="app-name">Mesh Gradient</span>
   <div class="topbar-sep"></div>
   <div class="tool-group">
     <button class="tool-btn active" id="toolSelect" onclick="setTool('select')">
-      <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M2 2l9 5.5-4.5 1.5L5 13z"/>
-      </svg>
-      Select <span class="kbd">S</span>
+      <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 2l9 5.5-4.5 1.5L5 13z"/></svg>
+      Select <span class="kbd">Ctrl S</span>
     </button>
     <button class="tool-btn" id="toolAdd" onclick="setTool('add')">
-      <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
-        <circle cx="7" cy="7" r="5"/>
-        <path d="M7 4.5v5M4.5 7h5"/>
-      </svg>
-      Add <span class="kbd">A</span>
+      <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="7" cy="7" r="5"/><path d="M7 4.5v5M4.5 7h5"/></svg>
+      Add <span class="kbd">Ctrl A</span>
     </button>
     <button class="tool-btn" id="toolDelete" onclick="setTool('delete')">
-      <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M3.5 4h7M5.5 4V3h3v1M4.5 4l.5 7h4l.5-7"/>
-      </svg>
-      Delete <span class="kbd">D</span>
+      <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 4h7M5.5 4V3h3v1M4.5 4l.5 7h4l.5-7"/></svg>
+      Delete
     </button>
   </div>
   <div class="topbar-right">
-    <span style="color:var(--text3);font-size:10px">Del — remove selected &nbsp;|&nbsp; Esc — deselect</span>
+    <span style="color:var(--text3);font-size:10px">Del — remove point &nbsp;·&nbsp; Esc — deselect</span>
   </div>
 </header>
 
-<!-- ── Workspace ─────────────────────────────────────────────────── -->
 <main class="workspace">
 
-  <!-- LEFT PANEL -->
+  <!-- ═══ LEFT PANEL ═══ -->
   <aside class="panel left">
 
-    <!-- Canvas Size -->
+    <!-- 1. Color Picker — primary tool, top of left -->
     <div class="section">
-      <div class="section-hdr" onclick="toggleSec(this)">Canvas Size <span class="chev">▾</span></div>
-      <div class="section-body">
-        <div class="chips">
-          <span class="chip" onclick="applyPreset(1080,1080)">1:1</span>
-          <span class="chip" onclick="applyPreset(1920,1080)">16:9</span>
-          <span class="chip" onclick="applyPreset(1080,1920)">9:16</span>
-          <span class="chip" onclick="applyPreset(2560,1440)">2K</span>
-          <span class="chip" onclick="applyPreset(3840,2160)">4K</span>
-          <span class="chip" onclick="applyPreset(595,842)">A4</span>
-        </div>
-        <div class="f-row">
-          <div class="f-field">
-            <label class="f-label">Width (px)</label>
-            <input type="number" id="canvasW" value="1080" min="100" max="8000">
-          </div>
-          <span style="color:var(--text3);font-size:14px;margin-bottom:6px">×</span>
-          <div class="f-field">
-            <label class="f-label">Height (px)</label>
-            <input type="number" id="canvasH" value="1080" min="100" max="8000">
-          </div>
-        </div>
-        <button class="btn btn-second btn-w" onclick="applySize()">Apply Size</button>
-      </div>
-    </div>
-
-    <!-- Color Palette -->
-    <div class="section">
-      <div class="section-hdr" onclick="toggleSec(this)">Color Palette <span class="chev">▾</span></div>
+      <div class="section-hdr" onclick="toggleSec(this)">Color Picker <span class="chev">▾</span></div>
       <div class="section-body">
         <div class="color-hero">
           <div class="swatch-big" id="activeSwatch" style="background:#ff5a7a">
@@ -579,15 +405,16 @@ select:focus { border-color: var(--accent); }
             <input type="number" class="rgb-inp" id="bInp" value="122" min="0" max="255" oninput="onRgbChange()">
           </div>
         </div>
-        <div class="f-row">
-          <button class="btn btn-ghost btn-sm" style="flex:1" onclick="saveColor()">Save Color</button>
-          <button class="btn btn-primary btn-sm" style="flex:1" onclick="applyToPoint()">Apply to Point</button>
+        <div style="display:flex;gap:6px;margin-bottom:10px">
+          <button class="btn btn-ghost btn-sm" style="flex:1" onclick="applyToSelected()">Apply to Point</button>
+          <button class="btn btn-second btn-sm" style="flex:1" onclick="saveColor()">Save Color</button>
         </div>
-        <div class="pal-row" id="palRow"></div>
+        <label class="f-label">Saved Colors</label>
+        <div class="saved-pal" id="palRow"></div>
       </div>
     </div>
 
-    <!-- Film Grain -->
+    <!-- 2. Film Grain -->
     <div class="section">
       <div class="section-hdr" onclick="toggleSec(this)">Film Grain <span class="chev">▾</span></div>
       <div class="section-body">
@@ -602,10 +429,10 @@ select:focus { border-color: var(--accent); }
           <div class="sl-row">
             <span class="sl-label">Size</span>
             <div class="sl-wrap">
-              <input type="range" id="grainSize" min="0.5" max="8" step="0.1" value="2"
+              <input type="range" id="grainSize" min="0.3" max="2.5" step="0.05" value="0.8"
                 oninput="genGrain();sv(this,'grainSizeV')">
             </div>
-            <span class="sl-val" id="grainSizeV">2.0</span>
+            <span class="sl-val" id="grainSizeV">0.8</span>
           </div>
           <div class="sl-row">
             <span class="sl-label">Density</span>
@@ -631,14 +458,50 @@ select:focus { border-color: var(--accent); }
             </div>
             <span class="sl-val" id="grainOpacV">28%</span>
           </div>
-          <button class="btn btn-ghost btn-sm btn-w" onclick="genGrain()">↺ Regenerate</button>
+          <button class="btn btn-ghost btn-sm btn-w" id="regenBtn">↺ Regenerate</button>
         </div>
       </div>
     </div>
 
+    <!-- 3. Canvas Size — less frequently adjusted, lower position -->
+    <div class="section">
+      <div class="section-hdr" onclick="toggleSec(this)">Canvas Size <span class="chev">▾</span></div>
+      <div class="section-body">
+        <div class="preset-row" id="presetRow">
+          <button class="preset-btn active" onclick="pickPreset(this,1080,1080)">1:1</button>
+          <button class="preset-btn" onclick="pickPreset(this,1080,1350)">4:5</button>
+          <button class="preset-btn" onclick="pickPreset(this,1920,1080)">16:9</button>
+          <button class="preset-btn" onclick="pickPreset(this,1080,1920)">9:16</button>
+        </div>
+        <div class="orient-row">
+          <button class="orient-btn active" id="orientLand" onclick="setOrient('land')">
+            <svg viewBox="0 0 12 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><rect x=".7" y=".7" width="10.6" height="7.6" rx="1.2"/></svg>
+            Landscape
+          </button>
+          <button class="orient-btn" id="orientPort" onclick="setOrient('port')">
+            <svg viewBox="0 0 9 12" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><rect x=".7" y=".7" width="7.6" height="10.6" rx="1.2"/></svg>
+            Portrait
+          </button>
+        </div>
+        <div class="f-row">
+          <div class="f-field">
+            <label class="f-label">Width</label>
+            <input type="number" id="canvasW" value="1080" min="100" max="8000">
+          </div>
+          <span style="color:var(--text3);font-size:14px;margin-bottom:6px">×</span>
+          <div class="f-field">
+            <label class="f-label">Height</label>
+            <input type="number" id="canvasH" value="1080" min="100" max="8000">
+          </div>
+        </div>
+        <button class="btn btn-second btn-w" onclick="applySize()">Apply Custom Size</button>
+      </div>
+    </div>
+
+    <div class="panel-spacer"></div>
   </aside>
 
-  <!-- CENTER -->
+  <!-- ═══ CENTER ═══ -->
   <div class="canvas-area" id="canvasArea">
     <div class="canvas-wrap" id="canvasWrap">
       <canvas id="glCanvas"></canvas>
@@ -646,31 +509,31 @@ select:focus { border-color: var(--accent); }
       <div class="pickers-layer" id="pickersLayer"></div>
       <div class="rec-progress" id="recProgress" style="width:0%"></div>
     </div>
-    <div class="canvas-hud" id="hud">1080 × 1080 &nbsp;·&nbsp; 0 points</div>
-    <div class="mode-badge" id="modeBadge">Add Point Mode</div>
+    <div class="canvas-hud" id="hud">1080 × 1080 · 0 points</div>
+    <div class="mode-badge" id="modeBadge"></div>
     <div class="rec-badge" id="recBadge">
       <div class="rec-dot"></div>
       <span id="recLabel">REC 0s</span>
     </div>
   </div>
 
-  <!-- RIGHT PANEL -->
+  <!-- ═══ RIGHT PANEL ═══ -->
   <aside class="panel right">
 
-    <!-- Points -->
+    <!-- 1. Color Points — main interaction list -->
     <div class="section">
       <div class="section-hdr" onclick="toggleSec(this)">Color Points <span class="chev">▾</span></div>
       <div class="section-body">
         <div class="pt-list" id="ptList">
-          <div class="empty-hint">Select Add tool (A) and click canvas.</div>
+          <div class="empty-hint">Select Add tool then click the canvas.</div>
         </div>
-        <div style="margin-top:8px;display:flex;gap:6px">
-          <button class="btn btn-ghost btn-sm" style="flex:1" onclick="clearAll()">Clear All</button>
+        <div style="margin-top:8px">
+          <button class="btn btn-ghost btn-sm btn-w" onclick="clearAll()">Clear All</button>
         </div>
       </div>
     </div>
 
-    <!-- Gradient -->
+    <!-- 2. Gradient -->
     <div class="section">
       <div class="section-hdr" onclick="toggleSec(this)">Gradient <span class="chev">▾</span></div>
       <div class="section-body">
@@ -682,13 +545,11 @@ select:focus { border-color: var(--accent); }
           </div>
           <span class="sl-val" id="falloffV">2.0</span>
         </div>
-        <div style="color:var(--text3);font-size:9px;line-height:1.5;margin-top:-2px">
-          Low = soft blend · High = sharp transitions
-        </div>
+        <div class="hint">Low = soft blend &nbsp;·&nbsp; High = sharp edges</div>
       </div>
     </div>
 
-    <!-- Animation -->
+    <!-- 3. Animation -->
     <div class="section">
       <div class="section-hdr" onclick="toggleSec(this)">Animation <span class="chev">▾</span></div>
       <div class="section-body">
@@ -716,7 +577,7 @@ select:focus { border-color: var(--accent); }
             </div>
             <span class="sl-val" id="animIntensityV">7%</span>
           </div>
-          <div class="anim-live" id="animLive">
+          <div class="anim-live">
             <div class="anim-dot"></div>
             <span>Animating live</span>
           </div>
@@ -724,7 +585,7 @@ select:focus { border-color: var(--accent); }
       </div>
     </div>
 
-    <!-- Export -->
+    <!-- 4. Export -->
     <div class="section">
       <div class="section-hdr" onclick="toggleSec(this)">Export <span class="chev">▾</span></div>
       <div class="section-body">
@@ -739,306 +600,247 @@ select:focus { border-color: var(--accent); }
         </div>
         <div class="btn-grid-2">
           <button class="btn btn-primary" onclick="exportJPG()">
-            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M6 1v7M3 5l3 3 3-3M2 11h8"/></svg>
-            JPG
+            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M6 1v7M3 5l3 3 3-3M2 11h8"/></svg>JPG
           </button>
           <button class="btn btn-second" onclick="exportSVG()">
-            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M6 1v7M3 5l3 3 3-3M2 11h8"/></svg>
-            SVG
+            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M6 1v7M3 5l3 3 3-3M2 11h8"/></svg>SVG
           </button>
         </div>
         <div style="margin-bottom:8px">
-          <label class="f-label">Video Duration (seconds)</label>
+          <label class="f-label">Video Duration (sec)</label>
           <input type="number" id="vidDur" value="6" min="2" max="60">
         </div>
         <button class="btn btn-second btn-w" onclick="exportVideo()">
           <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="1" y="3" width="8" height="7" rx="1"/><path d="M9 5l2-1v4l-2-1"/></svg>
           Export Video (MP4 / WebM)
         </button>
-        <div style="color:var(--text3);font-size:9px;line-height:1.5;margin-top:2px">
-          SVG is editable in Illustrator &amp; Figma.<br>
-          Video requires Animation to be enabled.
-        </div>
+        <div class="hint">SVG editable in Illustrator &amp; Figma.<br>Video needs Animation enabled.</div>
       </div>
     </div>
 
+    <div class="panel-spacer"></div>
+    <div class="panel-footer">MADE BY MK</div>
   </aside>
 </main>
 
 <script>
-/* ════════════════════════════════════════════════════════════════
+/* ════════════════════════════
    STATE
-════════════════════════════════════════════════════════════════ */
+════════════════════════════ */
 const S = {
-  cw: 1080, ch: 1080,      // canvas resolution
-  scale: 1,                // display scale (CSS)
-  points: [],              // [{id,x,y,r,g,b,phX,phY,fm}]
-  selId: null,
-  nid: 1,
-  tool: 'select',
-  color: { r:255, g:90, b:122 },
-  palette: [
-    {r:255,g:90,b:122},
-    {r:100,g:115,b:255},
-    {r:80,g:220,b:180},
-    {r:255,g:185,b:75},
-    {r:175,g:75,b:255},
-    {r:255,g:140,b:50},
+  cw:1080, ch:1080, scale:1,
+  points:[], selId:null, nid:1,
+  tool:'select',
+  color:{r:255,g:90,b:122},
+  palette:[
+    {r:255,g:90,b:122},{r:100,g:115,b:255},{r:80,g:220,b:180},
+    {r:255,g:185,b:75},{r:175,g:75,b:255},{r:255,g:140,b:50},
   ],
-  grainOn: false,
-  grainOpac: 0.28,
-  animOn: false,
-  animT: 0,
-  lastTs: 0,
-  falloff: 2,
-  drag: null,              // {id, mx0, my0, ox, oy}
-  recording: false,
+  grainOn:false, grainOpac:0.28,
+  animOn:false, animT:0, lastTs:0,
+  falloff:2, drag:null, recording:false,
+  curPreset:{w:1080,h:1080}, orient:'land',
 };
 
-/* ════════════════════════════════════════════════════════════════
+/* ════════════════════════════
    WEBGL
-════════════════════════════════════════════════════════════════ */
-const glCv  = document.getElementById('glCanvas');
-const grCv  = document.getElementById('grainCanvas');
-const plyr  = document.getElementById('pickersLayer');
+════════════════════════════ */
+const glCv = document.getElementById('glCanvas');
+const grCv = document.getElementById('grainCanvas');
+const plyr = document.getElementById('pickersLayer');
+let gl, prog, uRes, uN, uPts, uCols, uPow;
 
-let gl, prog;
-let uRes, uN, uPts, uCols, uPow;
-
-const VERT = `
-attribute vec2 aP;
-void main(){ gl_Position = vec4(aP,0.,1.); }
-`;
-const FRAG = `
+const VERT=`attribute vec2 aP;void main(){gl_Position=vec4(aP,0.,1.);}`;
+const FRAG=`
 precision highp float;
-uniform vec2  uRes;
-uniform int   uN;
-uniform vec2  uPts[32];
-uniform vec3  uCols[32];
-uniform float uPow;
-
+uniform vec2 uRes;uniform int uN;
+uniform vec2 uPts[32];uniform vec3 uCols[32];uniform float uPow;
 void main(){
-  vec2 uv = gl_FragCoord.xy / uRes;
-  uv.y = 1.0 - uv.y;
-
-  if(uN == 0){
-    gl_FragColor = vec4(0.12,0.12,0.15,1.); return;
-  }
-  if(uN == 1){
-    gl_FragColor = vec4(uCols[0],1.); return;
-  }
-
-  float wSum = 0.0;
-  vec3  col  = vec3(0.0);
-
+  vec2 uv=gl_FragCoord.xy/uRes;uv.y=1.-uv.y;
+  if(uN==0){gl_FragColor=vec4(.12,.12,.15,1.);return;}
+  if(uN==1){gl_FragColor=vec4(uCols[0],1.);return;}
+  float wSum=0.;vec3 col=vec3(0.);
   for(int i=0;i<32;i++){
-    if(i >= uN) break;
-    float d = distance(uv, uPts[i]);
-    if(d < 0.0005){
-      gl_FragColor = vec4(uCols[i],1.); return;
-    }
-    float w = 1.0 / pow(d, uPow);
-    wSum += w;
-    col  += w * uCols[i];
+    if(i>=uN)break;
+    float d=distance(uv,uPts[i]);
+    if(d<.0005){gl_FragColor=vec4(uCols[i],1.);return;}
+    float w=1./pow(d,uPow);wSum+=w;col+=w*uCols[i];
   }
-  gl_FragColor = vec4(col/wSum, 1.);
-}
-`;
+  gl_FragColor=vec4(col/wSum,1.);
+}`;
 
 function initGL(){
-  gl = glCv.getContext('webgl',{preserveDrawingBuffer:true,antialias:false});
-  if(!gl){ alert('WebGL not supported'); return; }
-
-  function sh(type,src){
-    const s = gl.createShader(type);
-    gl.shaderSource(s,src); gl.compileShader(s);
-    if(!gl.getShaderParameter(s,gl.COMPILE_STATUS)) console.error(gl.getShaderInfoLog(s));
-    return s;
-  }
-  prog = gl.createProgram();
-  gl.attachShader(prog, sh(gl.VERTEX_SHADER,   VERT));
-  gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, FRAG));
-  gl.linkProgram(prog);
-  gl.useProgram(prog);
-
-  const buf = gl.createBuffer();
-  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,1,1]), gl.STATIC_DRAW);
-  const aP = gl.getAttribLocation(prog,'aP');
-  gl.enableVertexAttribArray(aP);
-  gl.vertexAttribPointer(aP,2,gl.FLOAT,false,0,0);
-
-  uRes  = gl.getUniformLocation(prog,'uRes');
-  uN    = gl.getUniformLocation(prog,'uN');
-  uPts  = gl.getUniformLocation(prog,'uPts[0]');
-  uCols = gl.getUniformLocation(prog,'uCols[0]');
-  uPow  = gl.getUniformLocation(prog,'uPow');
+  gl=glCv.getContext('webgl',{preserveDrawingBuffer:true,antialias:false});
+  if(!gl){alert('WebGL not supported');return;}
+  function sh(t,s){const x=gl.createShader(t);gl.shaderSource(x,s);gl.compileShader(x);return x;}
+  prog=gl.createProgram();
+  gl.attachShader(prog,sh(gl.VERTEX_SHADER,VERT));
+  gl.attachShader(prog,sh(gl.FRAGMENT_SHADER,FRAG));
+  gl.linkProgram(prog);gl.useProgram(prog);
+  const buf=gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER,buf);
+  gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);
+  const aP=gl.getAttribLocation(prog,'aP');
+  gl.enableVertexAttribArray(aP);gl.vertexAttribPointer(aP,2,gl.FLOAT,false,0,0);
+  uRes=gl.getUniformLocation(prog,'uRes');uN=gl.getUniformLocation(prog,'uN');
+  uPts=gl.getUniformLocation(prog,'uPts[0]');uCols=gl.getUniformLocation(prog,'uCols[0]');
+  uPow=gl.getUniformLocation(prog,'uPow');
 }
 
 function glRender(pts){
-  pts = pts || S.points;
+  pts=pts||S.points;
   gl.viewport(0,0,S.cw,S.ch);
-  gl.uniform2f(uRes, S.cw, S.ch);
-  gl.uniform1i(uN, pts.length);
-  gl.uniform1f(uPow, S.falloff);
-  const pa = new Float32Array(64), ca = new Float32Array(96);
-  pts.forEach((p,i)=>{
-    pa[i*2]=p.x; pa[i*2+1]=p.y;
-    ca[i*3]=p.r/255; ca[i*3+1]=p.g/255; ca[i*3+2]=p.b/255;
-  });
-  gl.uniform2fv(uPts, pa);
-  gl.uniform3fv(uCols, ca);
-  gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+  gl.uniform2f(uRes,S.cw,S.ch);gl.uniform1i(uN,pts.length);gl.uniform1f(uPow,S.falloff);
+  const pa=new Float32Array(64),ca=new Float32Array(96);
+  pts.forEach((p,i)=>{pa[i*2]=p.x;pa[i*2+1]=p.y;ca[i*3]=p.r/255;ca[i*3+1]=p.g/255;ca[i*3+2]=p.b/255;});
+  gl.uniform2fv(uPts,pa);gl.uniform3fv(uCols,ca);
+  gl.drawArrays(gl.TRIANGLE_STRIP,0,4);
 }
 
-/* ════════════════════════════════════════════════════════════════
-   SCALE / RESIZE
-════════════════════════════════════════════════════════════════ */
+/* ════════════════════════════
+   CANVAS SIZE
+════════════════════════════ */
 function recalcScale(){
-  const area = document.getElementById('canvasArea');
-  const r = area.getBoundingClientRect();
-  const aw = r.width  - 56;
-  const ah = r.height - 56;
-  S.scale = Math.min(aw/S.cw, ah/S.ch, 1);
-  const dw = Math.round(S.cw * S.scale);
-  const dh = Math.round(S.ch * S.scale);
-  glCv.style.width  = grCv.style.width  = dw+'px';
-  glCv.style.height = grCv.style.height = dh+'px';
+  const r=document.getElementById('canvasArea').getBoundingClientRect();
+  S.scale=Math.min((r.width-56)/S.cw,(r.height-56)/S.ch,1);
+  const dw=Math.round(S.cw*S.scale),dh=Math.round(S.ch*S.scale);
+  glCv.style.width=grCv.style.width=dw+'px';
+  glCv.style.height=grCv.style.height=dh+'px';
   updateHUD();
-}
-
-function applySize(){
-  const w = clamp(+document.getElementById('canvasW').value||1080, 100, 8000);
-  const h = clamp(+document.getElementById('canvasH').value||1080, 100, 8000);
-  resizeCanvas(w,h);
-}
-
-function applyPreset(w,h){
-  document.getElementById('canvasW').value = w;
-  document.getElementById('canvasH').value = h;
-  resizeCanvas(w,h);
 }
 
 function resizeCanvas(w,h){
-  S.cw = w; S.ch = h;
-  glCv.width  = grCv.width  = w;
-  glCv.height = grCv.height = h;
-  recalcScale();
-  glRender();
-  if(S.grainOn) genGrain();
-  updateHUD();
+  S.cw=w;S.ch=h;
+  glCv.width=grCv.width=w;glCv.height=grCv.height=h;
+  document.getElementById('canvasW').value=w;
+  document.getElementById('canvasH').value=h;
+  recalcScale();glRender();
+  if(S.grainOn)genGrain();
+  renderPickers();updateHUD();
 }
 
-/* ════════════════════════════════════════════════════════════════
-   FILM GRAIN
-════════════════════════════════════════════════════════════════ */
+function applySize(){
+  const w=clamp(+document.getElementById('canvasW').value||1080,100,8000);
+  const h=clamp(+document.getElementById('canvasH').value||1080,100,8000);
+  document.querySelectorAll('.preset-btn').forEach(b=>b.classList.remove('active'));
+  resizeCanvas(w,h);
+}
+
+function pickPreset(btn,w,h){
+  S.curPreset={w,h};
+  document.querySelectorAll('.preset-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  applyOrient(S.orient);
+}
+
+function setOrient(o){
+  S.orient=o;
+  document.getElementById('orientLand').classList.toggle('active',o==='land');
+  document.getElementById('orientPort').classList.toggle('active',o==='port');
+  applyOrient(o);
+}
+
+function applyOrient(o){
+  let{w,h}=S.curPreset;
+  if(o==='port'&&w>h)[w,h]=[h,w];
+  else if(o==='land'&&h>w)[w,h]=[h,w];
+  resizeCanvas(w,h);
+}
+
+/* ════════════════════════════
+   FILM GRAIN — pixel-only, size 0.3–2.5 → blur 0–2.5px
+════════════════════════════ */
 function genGrain(){
-  if(!S.grainOn) return;
-  const W = S.cw, H = S.ch;
-  const size    = +document.getElementById('grainSize').value;
-  const density = +document.getElementById('grainDensity').value;
-  const rough   = +document.getElementById('grainRough').value;
+  if(!S.grainOn)return;
+  const W=S.cw,H=S.ch;
+  const size    =+document.getElementById('grainSize').value;
+  const density =+document.getElementById('grainDensity').value;
+  const rough   =+document.getElementById('grainRough').value;
 
-  // Generate noise at capped resolution for performance
-  const GW = Math.min(W, 1200);
-  const GH = Math.min(H, 1200);
+  // Work at reduced res for performance, then scale up
+  const GW=Math.min(W,1200),GH=Math.min(H,1200);
+  const off=document.createElement('canvas');
+  off.width=GW;off.height=GH;
+  const ctx=off.getContext('2d');
+  const id=ctx.createImageData(GW,GH);
+  const d=id.data;
 
-  const off = document.createElement('canvas');
-  off.width = GW; off.height = GH;
-  const ctx = off.getContext('2d');
-  const id  = ctx.createImageData(GW, GH);
-  const d   = id.data;
-
-  for(let i=0; i<GW*GH; i++){
-    if(Math.random() < density){
-      let v = Math.random() * 255;
-      // Roughness = contrast boost
-      v = 128 + (v-128)*(1 + rough*5);
-      v = Math.max(0, Math.min(255, v));
-      d[i*4]=d[i*4+1]=d[i*4+2]=v;
-      d[i*4+3]=255;
-    } else {
-      d[i*4+3]=0;
+  for(let i=0;i<GW*GH;i++){
+    if(Math.random()<density){
+      let v=Math.random()*255;
+      // roughness = contrast
+      v=128+(v-128)*(1+rough*3.5);
+      v=Math.max(0,Math.min(255,v));
+      d[i*4]=d[i*4+1]=d[i*4+2]=Math.round(v);
+      d[i*4+3]=200+Math.round(rough*55);
     }
   }
-  ctx.putImageData(id, 0, 0);
+  ctx.putImageData(id,0,0);
 
-  const gc = grCv.getContext('2d');
+  const gc=grCv.getContext('2d');
   gc.clearRect(0,0,W,H);
-  const blur = Math.max(0, (size-0.5)*0.5);
-  gc.filter = blur > 0 ? `blur(${blur}px)` : 'none';
-  gc.drawImage(off, 0, 0, W, H);
-  gc.filter = 'none';
-
+  // blur maps size 0.3→0px, 2.5→2px
+  const blur=Math.max(0,(size-0.3)*1.0);
+  if(blur>0){
+    const tmp=document.createElement('canvas');tmp.width=GW;tmp.height=GH;
+    const tc=tmp.getContext('2d');
+    tc.filter=`blur(${blur}px)`;tc.drawImage(off,0,0);tc.filter='none';
+    gc.drawImage(tmp,0,0,W,H);
+  } else {
+    gc.drawImage(off,0,0,W,H);
+  }
   setGrainOpac();
 }
 
 function setGrainOpac(){
-  S.grainOpac = +document.getElementById('grainOpac').value;
-  grCv.style.opacity      = S.grainOn ? S.grainOpac : 0;
-  grCv.style.mixBlendMode = 'overlay';
+  S.grainOpac=+document.getElementById('grainOpac').value;
+  grCv.style.opacity=S.grainOn?S.grainOpac:0;
 }
 
 function onGrainToggle(){
-  S.grainOn = document.getElementById('grainOn').checked;
-  const ctrl = document.getElementById('grainCtrl');
-  ctrl.style.opacity      = S.grainOn ? '1' : '0.35';
-  ctrl.style.pointerEvents= S.grainOn ? 'all' : 'none';
-  if(S.grainOn) genGrain();
-  else { grCv.style.opacity = 0; }
+  S.grainOn=document.getElementById('grainOn').checked;
+  const ctrl=document.getElementById('grainCtrl');
+  ctrl.style.opacity=S.grainOn?'1':'0.35';
+  ctrl.style.pointerEvents=S.grainOn?'all':'none';
+  if(S.grainOn)genGrain();else grCv.style.opacity=0;
 }
 
-/* ════════════════════════════════════════════════════════════════
+document.getElementById('regenBtn').addEventListener('click',()=>{if(S.grainOn)genGrain();});
+
+/* ════════════════════════════
    COLOR
-════════════════════════════════════════════════════════════════ */
-function toHex(r,g,b){
-  return '#'+[r,g,b].map(v=>v.toString(16).padStart(2,'0')).join('').toUpperCase();
-}
+════════════════════════════ */
+function toHex(r,g,b){return'#'+[r,g,b].map(v=>v.toString(16).padStart(2,'0')).join('').toUpperCase();}
 function fromHex(h){
-  h = h.replace('#','');
-  if(h.length!==6) return null;
-  const r=parseInt(h.slice(0,2),16), g=parseInt(h.slice(2,4),16), b=parseInt(h.slice(4,6),16);
-  return (isNaN(r)||isNaN(g)||isNaN(b)) ? null : {r,g,b};
+  h=h.replace('#','');if(h.length!==6)return null;
+  const r=parseInt(h.slice(0,2),16),g=parseInt(h.slice(2,4),16),b=parseInt(h.slice(4,6),16);
+  return(isNaN(r)||isNaN(g)||isNaN(b))?null:{r,g,b};
 }
-function clamp(v,a,b){ return Math.max(a,Math.min(b,v)); }
+function clamp(v,a,b){return Math.max(a,Math.min(b,v));}
 
-function setColor(r,g,b,skipUI){
-  S.color = {r:clamp(r,0,255), g:clamp(g,0,255), b:clamp(b,0,255)};
-  const hex = toHex(r,g,b);
-  document.getElementById('activeSwatch').style.background = hex;
-  if(!skipUI){
-    document.getElementById('hexInp').value = hex;
-    document.getElementById('rInp').value = r;
-    document.getElementById('gInp').value = g;
-    document.getElementById('bInp').value = b;
-    document.getElementById('nativePicker').value = hex;
-  }
+function setColor(r,g,b){
+  S.color={r:clamp(r,0,255),g:clamp(g,0,255),b:clamp(b,0,255)};
+  const hex=toHex(r,g,b);
+  document.getElementById('activeSwatch').style.background=hex;
+  document.getElementById('hexInp').value=hex;
+  document.getElementById('rInp').value=r;
+  document.getElementById('gInp').value=g;
+  document.getElementById('bInp').value=b;
+  document.getElementById('nativePicker').value=hex;
 }
 
-function onNativePick(hex){
-  const c = fromHex(hex);
-  if(c) setColor(c.r,c.g,c.b);
-}
+function onNativePick(hex){const c=fromHex(hex);if(c)setColor(c.r,c.g,c.b);}
 function onHexInput(v){
-  const hex = v.startsWith('#') ? v : '#'+v;
-  const c = fromHex(hex);
-  if(c){
-    S.color = c;
-    document.getElementById('activeSwatch').style.background = hex;
-    document.getElementById('rInp').value = c.r;
-    document.getElementById('gInp').value = c.g;
-    document.getElementById('bInp').value = c.b;
-    document.getElementById('nativePicker').value = hex;
-  }
+  const hex=v.startsWith('#')?v:'#'+v;const c=fromHex(hex);
+  if(c){S.color=c;document.getElementById('activeSwatch').style.background=hex;document.getElementById('rInp').value=c.r;document.getElementById('gInp').value=c.g;document.getElementById('bInp').value=c.b;document.getElementById('nativePicker').value=hex;}
 }
-function onHexBlur(){
-  setColor(S.color.r, S.color.g, S.color.b);
-}
+function onHexBlur(){setColor(S.color.r,S.color.g,S.color.b);}
 function onRgbChange(){
-  const r=clamp(+document.getElementById('rInp').value||0,0,255);
-  const g=clamp(+document.getElementById('gInp').value||0,0,255);
-  const b=clamp(+document.getElementById('bInp').value||0,0,255);
-  setColor(r,g,b);
+  setColor(
+    clamp(+document.getElementById('rInp').value||0,0,255),
+    clamp(+document.getElementById('gInp').value||0,0,255),
+    clamp(+document.getElementById('bInp').value||0,0,255)
+  );
 }
 
 function saveColor(){
@@ -1046,11 +848,19 @@ function saveColor(){
   renderPalette();
 }
 
+function deletePaletteColor(i){
+  S.palette.splice(i,1);
+  renderPalette();
+}
+
 function renderPalette(){
-  const row = document.getElementById('palRow');
+  const row=document.getElementById('palRow');
   row.innerHTML='';
   S.palette.forEach((c,i)=>{
-    const sw = document.createElement('div');
+    const wrap=document.createElement('div');
+    wrap.className='pal-wrap';
+
+    const sw=document.createElement('div');
     sw.className='pal-sw';
     sw.style.background=toHex(c.r,c.g,c.b);
     sw.title=toHex(c.r,c.g,c.b);
@@ -1059,227 +869,244 @@ function renderPalette(){
       document.querySelectorAll('.pal-sw').forEach(s=>s.classList.remove('active'));
       sw.classList.add('active');
     };
-    row.appendChild(sw);
+
+    const del=document.createElement('button');
+    del.className='pal-del';del.textContent='×';
+    del.title='Remove';
+    del.onclick=(e)=>{e.stopPropagation();deletePaletteColor(i);};
+
+    wrap.appendChild(sw);wrap.appendChild(del);
+    row.appendChild(wrap);
   });
   const add=document.createElement('div');
-  add.className='pal-add'; add.textContent='+';
-  add.onclick=saveColor;
+  add.className='pal-add';add.textContent='+';add.onclick=saveColor;
   row.appendChild(add);
 }
 
-function applyToPoint(){
-  if(!S.selId) return;
-  const p = S.points.find(p=>p.id===S.selId);
-  if(p){ p.r=S.color.r; p.g=S.color.g; p.b=S.color.b; glRender(); renderPickers(); renderList(); }
+function applyToSelected(){
+  if(!S.selId)return;
+  const p=S.points.find(p=>p.id===S.selId);
+  if(p){p.r=S.color.r;p.g=S.color.g;p.b=S.color.b;glRender();renderPickers();renderList();}
 }
 
-/* ════════════════════════════════════════════════════════════════
+/* ════════════════════════════
    POINTS
-════════════════════════════════════════════════════════════════ */
+════════════════════════════ */
 function addPoint(nx,ny){
-  S.points.push({
-    id:S.nid++,
-    x:nx, y:ny,
-    r:S.color.r, g:S.color.g, b:S.color.b,
-    phX: Math.random()*Math.PI*2,
-    phY: Math.random()*Math.PI*2,
-    fm:  0.65 + Math.random()*0.7,
-  });
-  glRender();
-  renderPickers();
-  renderList();
-  sel(S.points[S.points.length-1].id);
+  const pt={
+    id:S.nid++,x:nx,y:ny,
+    r:S.color.r,g:S.color.g,b:S.color.b,
+    phX:Math.random()*Math.PI*2,phY:Math.random()*Math.PI*2,
+    fm:.65+Math.random()*.7,
+  };
+  S.points.push(pt);
+  glRender();renderPickers();renderList();sel(pt.id);
 }
 
 function removePoint(id){
-  S.points = S.points.filter(p=>p.id!==id);
-  if(S.selId===id) S.selId=null;
-  glRender(); renderPickers(); renderList(); updateHUD();
+  S.points=S.points.filter(p=>p.id!==id);
+  if(S.selId===id)S.selId=null;
+  glRender();renderPickers();renderList();updateHUD();
 }
 
 function clearAll(){
-  S.points=[]; S.selId=null;
-  glRender(); renderPickers(); renderList(); updateHUD();
+  S.points=[];S.selId=null;
+  glRender();renderPickers();renderList();updateHUD();
 }
 
 function sel(id){
-  S.selId=id;
-  renderPickers(); renderList();
+  S.selId=id;renderPickers();renderList();
   const p=S.points.find(p=>p.id===id);
-  if(p) setColor(p.r,p.g,p.b);
+  if(p)setColor(p.r,p.g,p.b);
 }
 
 function animPts(t){
-  if(!S.animOn) return S.points;
-  const spd = +document.getElementById('animSpeed').value;
-  const intn= +document.getElementById('animIntensity').value;
+  if(!S.animOn)return S.points;
+  const spd=+document.getElementById('animSpeed').value;
+  const intn=+document.getElementById('animIntensity').value;
   return S.points.map(p=>({
     ...p,
-    x: p.x + Math.cos(t*spd*p.fm    + p.phX)*intn,
-    y: p.y + Math.sin(t*spd*p.fm*0.7+ p.phY)*intn,
+    x:p.x+Math.cos(t*spd*p.fm+p.phX)*intn,
+    y:p.y+Math.sin(t*spd*p.fm*.7+p.phY)*intn,
   }));
 }
 
-/* ════════════════════════════════════════════════════════════════
-   PICKERS (DOM-recycled)
-════════════════════════════════════════════════════════════════ */
+/* ════════════════════════════
+   PICKERS
+════════════════════════════ */
 function renderPickers(){
-  const sc=S.scale, W=S.cw, H=S.ch;
+  const sc=S.scale,W=S.cw,H=S.ch;
   const ap=animPts(S.animT);
-
-  // Sync element count
-  while(plyr.children.length > S.points.length) plyr.removeChild(plyr.lastChild);
-  while(plyr.children.length < S.points.length){
+  while(plyr.children.length>S.points.length)plyr.removeChild(plyr.lastChild);
+  while(plyr.children.length<S.points.length){
     const el=document.createElement('div');
     el.className='picker';
-    el.addEventListener('mousedown', pickerDown);
+    el.addEventListener('mousedown',pickerDown);
     plyr.appendChild(el);
   }
-
   S.points.forEach((orig,i)=>{
-    const a=ap[i], el=plyr.children[i];
-    el.dataset.id = orig.id;
-    el.className  = 'picker'+(orig.id===S.selId?' selected':'');
-    el.style.background = toHex(orig.r,orig.g,orig.b);
-    el.style.left = (a.x*W*sc)+'px';
-    el.style.top  = (a.y*H*sc)+'px';
+    const a=ap[i],el=plyr.children[i];
+    el.dataset.id=orig.id;
+    el.className='picker'+(orig.id===S.selId?' selected':'');
+    el.style.background=toHex(orig.r,orig.g,orig.b);
+    el.style.left=(a.x*W*sc)+'px';
+    el.style.top=(a.y*H*sc)+'px';
   });
 }
 
 function pickerDown(e){
   e.stopPropagation();
   const id=+e.currentTarget.dataset.id;
-  if(S.tool==='delete'){ removePoint(id); return; }
+  if(S.tool==='delete'){removePoint(id);return;}
   sel(id);
   const p=S.points.find(p=>p.id===id);
-  if(p) S.drag={id, mx0:e.clientX, my0:e.clientY, ox:p.x, oy:p.y};
+  if(p)S.drag={id,mx0:e.clientX,my0:e.clientY,ox:p.x,oy:p.y};
 }
 
+/* ════════════════════════════
+   POINTS LIST
+════════════════════════════ */
 function renderList(){
   const el=document.getElementById('ptList');
   if(!S.points.length){
-    el.innerHTML='<div class="empty-hint">Select Add tool (A) and click canvas.</div>';
-    updateHUD(); return;
+    el.innerHTML='<div class="empty-hint">Select Add tool then click the canvas.</div>';
+    updateHUD();return;
   }
   el.innerHTML='';
   S.points.forEach((p,i)=>{
     const item=document.createElement('div');
     item.className='pt-item'+(p.id===S.selId?' sel':'');
-    item.innerHTML=`
-      <div class="pt-sw" style="background:${toHex(p.r,p.g,p.b)}"></div>
-      <span class="pt-label">Point ${i+1} <span class="pt-hex">${toHex(p.r,p.g,p.b)}</span></span>
-      <button class="pt-del" onclick="event.stopPropagation();removePoint(${p.id})">×</button>
-    `;
-    item.onclick=()=>sel(p.id);
+    item.dataset.id=p.id;
+
+    const swWrap=document.createElement('div');
+    swWrap.className='pt-sw';
+    swWrap.style.background=toHex(p.r,p.g,p.b);
+    const nat=document.createElement('input');
+    nat.type='color';nat.value=toHex(p.r,p.g,p.b);
+    nat.addEventListener('input',ev=>{
+      ev.stopPropagation();
+      const c=fromHex(ev.target.value);
+      if(c){p.r=c.r;p.g=c.g;p.b=c.b;swWrap.style.background=ev.target.value;hexInpEl.value=ev.target.value.toUpperCase();setColor(c.r,c.g,c.b);glRender();renderPickers();}
+    });
+    swWrap.appendChild(nat);
+
+    const hexInpEl=document.createElement('input');
+    hexInpEl.type='text';hexInpEl.className='pt-hex-inp';
+    hexInpEl.value=toHex(p.r,p.g,p.b);hexInpEl.maxLength=7;
+    hexInpEl.addEventListener('click',ev=>ev.stopPropagation());
+    hexInpEl.addEventListener('input',ev=>{
+      ev.stopPropagation();
+      const raw=ev.target.value;
+      const c=fromHex(raw.startsWith('#')?raw:'#'+raw);
+      if(c){p.r=c.r;p.g=c.g;p.b=c.b;swWrap.style.background=toHex(c.r,c.g,c.b);nat.value=toHex(c.r,c.g,c.b);glRender();renderPickers();}
+    });
+    hexInpEl.addEventListener('blur',()=>{hexInpEl.value=toHex(p.r,p.g,p.b);});
+
+    const del=document.createElement('button');
+    del.className='pt-del';del.innerHTML='&times;';
+    del.addEventListener('click',ev=>{ev.stopPropagation();removePoint(p.id);});
+
+    item.appendChild(swWrap);item.appendChild(hexInpEl);item.appendChild(del);
+    item.addEventListener('mousedown',ev=>{
+      if(ev.target===hexInpEl||ev.target===nat)return;
+      sel(p.id);
+    });
     el.appendChild(item);
   });
   updateHUD();
 }
 
-/* ════════════════════════════════════════════════════════════════
-   MOUSE EVENTS
-════════════════════════════════════════════════════════════════ */
-plyr.addEventListener('mousedown',e=>{
-  if(e.target!==plyr) return;
+/* ════════════════════════════
+   MOUSE
+════════════════════════════ */
+document.getElementById('canvasWrap').addEventListener('mousedown',e=>{
+  if(e.target.classList.contains('picker'))return;
   if(S.tool==='add'){
-    const r=plyr.getBoundingClientRect();
+    const r=glCv.getBoundingClientRect();
     const nx=clamp((e.clientX-r.left)/(S.cw*S.scale),0,1);
-    const ny=clamp((e.clientY-r.top) /(S.ch*S.scale),0,1);
+    const ny=clamp((e.clientY-r.top)/(S.ch*S.scale),0,1);
     addPoint(nx,ny);
   } else if(S.tool==='select'){
-    S.selId=null; renderPickers(); renderList();
+    S.selId=null;renderPickers();renderList();
   }
 });
 
 document.addEventListener('mousemove',e=>{
-  if(!S.drag) return;
-  const {id,mx0,my0,ox,oy}=S.drag;
+  if(!S.drag)return;
+  const{id,mx0,my0,ox,oy}=S.drag;
   const p=S.points.find(p=>p.id===id);
   if(p){
     p.x=clamp(ox+(e.clientX-mx0)/(S.cw*S.scale),0,1);
     p.y=clamp(oy+(e.clientY-my0)/(S.ch*S.scale),0,1);
-    glRender(); renderPickers();
+    glRender();renderPickers();
   }
 });
+document.addEventListener('mouseup',()=>{if(S.drag){S.drag=null;renderList();}});
 
-document.addEventListener('mouseup',()=>{ if(S.drag){ S.drag=null; renderList(); } });
-
-/* ════════════════════════════════════════════════════════════════
+/* ════════════════════════════
    TOOLS
-════════════════════════════════════════════════════════════════ */
+════════════════════════════ */
 function setTool(t){
   S.tool=t;
   document.querySelectorAll('.tool-btn').forEach(b=>b.classList.remove('active'));
-  const map={select:'toolSelect',add:'toolAdd',delete:'toolDelete'};
-  document.getElementById(map[t]).classList.add('active');
-  glCv.style.cursor = t==='add'?'crosshair':t==='delete'?'not-allowed':'default';
-  plyr.style.cursor  = glCv.style.cursor;
-
+  document.getElementById({select:'toolSelect',add:'toolAdd',delete:'toolDelete'}[t]).classList.add('active');
+  const cur=t==='add'?'crosshair':t==='delete'?'not-allowed':'default';
+  glCv.style.cursor=cur;
+  document.getElementById('canvasWrap').style.cursor=cur;
   const badge=document.getElementById('modeBadge');
-  const labels={select:'Select Mode',add:'Add Point Mode',delete:'Delete Mode'};
-  badge.textContent=labels[t];
+  badge.textContent={select:'Select Mode',add:'Add Point Mode',delete:'Delete Mode'}[t];
   badge.classList.add('visible');
   clearTimeout(badge._to);
-  badge._to=setTimeout(()=>badge.classList.remove('visible'),1800);
+  badge._to=setTimeout(()=>badge.classList.remove('visible'),1600);
 }
 
-/* ════════════════════════════════════════════════════════════════
-   ANIMATION LOOP
-════════════════════════════════════════════════════════════════ */
+/* ════════════════════════════
+   ANIMATION
+════════════════════════════ */
 let raf=null;
 
 function onAnimToggle(){
   S.animOn=document.getElementById('animOn').checked;
   const ctrl=document.getElementById('animCtrl');
-  ctrl.style.opacity      = S.animOn?'1':'0.35';
-  ctrl.style.pointerEvents= S.animOn?'all':'none';
-  if(S.animOn) startAnim(); else stopAnim();
+  ctrl.style.opacity=S.animOn?'1':'0.35';
+  ctrl.style.pointerEvents=S.animOn?'all':'none';
+  if(S.animOn)startAnim();else stopAnim();
 }
 
 function startAnim(){
-  if(raf) return;
+  if(raf)return;
   S.lastTs=performance.now();
   function loop(ts){
-    const dt=(ts-S.lastTs)/1000;
-    S.lastTs=ts;
-    S.animT+=dt;
+    const dt=(ts-S.lastTs)/1000;S.lastTs=ts;S.animT+=dt;
     const ap=animPts(S.animT);
-    glRender(ap);
-    renderPickers();
-    if(S.recording) drawComposite(ap);
+    glRender(ap);renderPickers();
+    if(S.recording)drawComposite(ap);
     raf=requestAnimationFrame(loop);
   }
   raf=requestAnimationFrame(loop);
 }
 
 function stopAnim(){
-  if(raf){ cancelAnimationFrame(raf); raf=null; }
-  glRender(); renderPickers();
+  if(raf){cancelAnimationFrame(raf);raf=null;}
+  glRender();renderPickers();
 }
 
-/* ════════════════════════════════════════════════════════════════
-   GRADIENT FALLOFF
-════════════════════════════════════════════════════════════════ */
 function onFalloff(){
   S.falloff=+document.getElementById('falloff').value;
   glRender();
 }
 
-/* ════════════════════════════════════════════════════════════════
-   COMPOSITE CANVAS (for export)
-════════════════════════════════════════════════════════════════ */
-let compCv, compCtx;
+/* ════════════════════════════
+   COMPOSITE
+════════════════════════════ */
+let compCv,compCtx;
 function ensureComp(){
-  if(!compCv){
-    compCv=document.createElement('canvas');
-    compCtx=compCv.getContext('2d');
-  }
-  compCv.width=S.cw; compCv.height=S.ch;
+  if(!compCv){compCv=document.createElement('canvas');compCtx=compCv.getContext('2d');}
+  compCv.width=S.cw;compCv.height=S.ch;
 }
-
 function drawComposite(pts){
   ensureComp();
-  if(pts) glRender(pts);
+  if(pts)glRender(pts);
   compCtx.clearRect(0,0,S.cw,S.ch);
   compCtx.drawImage(glCv,0,0,S.cw,S.ch);
   if(S.grainOn){
@@ -1291,199 +1118,133 @@ function drawComposite(pts){
   }
 }
 
-/* ════════════════════════════════════════════════════════════════
-   EXPORT — JPG
-════════════════════════════════════════════════════════════════ */
+/* ════════════════════════════
+   EXPORT
+════════════════════════════ */
 function exportJPG(){
   drawComposite();
-  const q=+document.getElementById('jpgQ').value;
   const a=document.createElement('a');
   a.download='mesh-gradient.jpg';
-  a.href=compCv.toDataURL('image/jpeg',q);
+  a.href=compCv.toDataURL('image/jpeg',+document.getElementById('jpgQ').value);
   a.click();
 }
 
-/* ════════════════════════════════════════════════════════════════
-   EXPORT — SVG (editable radial gradients)
-════════════════════════════════════════════════════════════════ */
 function exportSVG(){
-  const W=S.cw, H=S.ch;
-  if(!S.points.length){ alert('Add color points first!'); return; }
-
-  // Average color for background
+  const W=S.cw,H=S.ch;
+  if(!S.points.length){alert('Add color points first!');return;}
   let ar=0,ag=0,ab=0;
   S.points.forEach(p=>{ar+=p.r;ag+=p.g;ab+=p.b;});
-  ar=Math.round(ar/S.points.length*0.25);
-  ag=Math.round(ag/S.points.length*0.25);
-  ab=Math.round(ab/S.points.length*0.25);
-
+  ar=Math.round(ar/S.points.length*.25);ag=Math.round(ag/S.points.length*.25);ab=Math.round(ab/S.points.length*.25);
   const R=Math.round(Math.max(W,H)*1.05);
-  let defs='', layers='';
-
+  let defs='',layers='';
   S.points.forEach((p,i)=>{
-    const cx=Math.round(p.x*W), cy=Math.round(p.y*H);
-    const hex=toHex(p.r,p.g,p.b);
-    defs+=`
-    <!-- Color Point ${i+1}: ${hex} -->
-    <radialGradient id="mg${i}" cx="${cx}" cy="${cy}" r="${R}" gradientUnits="userSpaceOnUse">
-      <stop offset="0%"   stop-color="${hex}" stop-opacity="1"/>
-      <stop offset="40%"  stop-color="${hex}" stop-opacity="0.7"/>
-      <stop offset="75%"  stop-color="${hex}" stop-opacity="0.2"/>
+    const cx=Math.round(p.x*W),cy=Math.round(p.y*H),hex=toHex(p.r,p.g,p.b);
+    defs+=`\n    <radialGradient id="mg${i}" cx="${cx}" cy="${cy}" r="${R}" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="${hex}" stop-opacity="1"/>
+      <stop offset="40%" stop-color="${hex}" stop-opacity="0.7"/>
+      <stop offset="75%" stop-color="${hex}" stop-opacity="0.2"/>
       <stop offset="100%" stop-color="${hex}" stop-opacity="0"/>
     </radialGradient>`;
-    const blend = i===0 ? 'normal' : 'screen';
-    layers+=`\n  <!-- Point ${i+1} -->\n  <rect id="layer${i}" width="${W}" height="${H}" fill="url(#mg${i})" style="mix-blend-mode:${blend}"/>`;
+    layers+=`\n  <rect width="${W}" height="${H}" fill="url(#mg${i})" style="mix-blend-mode:${i===0?'normal':'screen'}"/>`;
   });
-
   const svg=`<?xml version="1.0" encoding="UTF-8"?>
-<!--
-  Mesh Gradient — Generated by Mesh Gradient Designer
-  Editable in Adobe Illustrator and Figma.
-  Each <radialGradient> element = one color point.
-  Adjust cx/cy to reposition, stop-color to recolor.
--->
-<svg xmlns="http://www.w3.org/2000/svg"
-     xmlns:xlink="http://www.w3.org/1999/xlink"
-     width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
+<!-- Mesh Gradient — editable in Illustrator & Figma. Each radialGradient = one color point. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
   <defs>${defs}
   </defs>
-  <!-- Background -->
-  <rect id="background" width="${W}" height="${H}" fill="rgb(${ar},${ag},${ab})"/>
-  <!-- Gradient Layers -->
-  ${layers}
+  <rect width="${W}" height="${H}" fill="rgb(${ar},${ag},${ab})"/>${layers}
 </svg>`;
-
   const blob=new Blob([svg],{type:'image/svg+xml;charset=utf-8'});
   const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');
-  a.download='mesh-gradient.svg'; a.href=url; a.click();
+  const a=document.createElement('a');a.download='mesh-gradient.svg';a.href=url;a.click();
   setTimeout(()=>URL.revokeObjectURL(url),60000);
 }
 
-/* ════════════════════════════════════════════════════════════════
-   EXPORT — VIDEO
-════════════════════════════════════════════════════════════════ */
 function exportVideo(){
   if(!S.animOn){
-    if(!confirm('Animation is off. Enable it and start recording?')) return;
-    document.getElementById('animOn').checked=true;
-    onAnimToggle();
+    if(!confirm('Animation is off. Enable it and start recording?'))return;
+    document.getElementById('animOn').checked=true;onAnimToggle();
   }
   const dur=clamp(+document.getElementById('vidDur').value||6,2,60);
   ensureComp();
-
-  // Pick best mime
-  const types=[
-    'video/mp4;codecs=avc1',
-    'video/mp4',
-    'video/webm;codecs=vp9',
-    'video/webm',
-  ];
-  let mime='video/webm', ext='webm';
-  for(const t of types){
-    if(MediaRecorder.isTypeSupported(t)){ mime=t; ext=t.startsWith('video/mp4')?'mp4':'webm'; break; }
-  }
-
+  const types=['video/mp4;codecs=avc1','video/mp4','video/webm;codecs=vp9','video/webm'];
+  let mime='video/webm',ext='webm';
+  for(const t of types){if(MediaRecorder.isTypeSupported(t)){mime=t;ext=t.startsWith('video/mp4')?'mp4':'webm';break;}}
   const stream=compCv.captureStream(30);
   let rec;
-  try{ rec=new MediaRecorder(stream,{mimeType:mime,videoBitsPerSecond:12000000}); }
-  catch(e){ rec=new MediaRecorder(stream,{videoBitsPerSecond:8000000}); }
-
+  try{rec=new MediaRecorder(stream,{mimeType:mime,videoBitsPerSecond:12000000});}
+  catch(e){rec=new MediaRecorder(stream,{videoBitsPerSecond:8000000});}
   const chunks=[];
-  rec.ondataavailable=e=>{ if(e.data.size>0) chunks.push(e.data); };
+  rec.ondataavailable=e=>{if(e.data.size>0)chunks.push(e.data);};
   rec.onstop=()=>{
     const blob=new Blob(chunks,{type:mime});
     const url=URL.createObjectURL(blob);
-    const a=document.createElement('a');
-    a.download=`mesh-gradient.${ext}`; a.href=url; a.click();
+    const a=document.createElement('a');a.download=`mesh-gradient.${ext}`;a.href=url;a.click();
     setTimeout(()=>URL.revokeObjectURL(url),60000);
     S.recording=false;
     document.getElementById('recBadge').style.display='none';
     document.getElementById('recProgress').style.width='0%';
   };
-
   S.recording=true;
-  const recBadge=document.getElementById('recBadge');
-  recBadge.style.display='flex';
-
-  // Progress
+  document.getElementById('recBadge').style.display='flex';
   const start=performance.now();
-  function updateRec(){
-    if(!S.recording) return;
-    const elapsed=(performance.now()-start)/1000;
-    const pct=Math.min(100,(elapsed/dur)*100);
-    document.getElementById('recProgress').style.width=pct+'%';
-    document.getElementById('recLabel').textContent=`REC ${elapsed.toFixed(1)}s`;
-    requestAnimationFrame(updateRec);
-  }
-  requestAnimationFrame(updateRec);
-
+  (function tick(){
+    if(!S.recording)return;
+    const e=(performance.now()-start)/1000;
+    document.getElementById('recProgress').style.width=Math.min(100,(e/dur)*100)+'%';
+    document.getElementById('recLabel').textContent=`REC ${e.toFixed(1)}s`;
+    requestAnimationFrame(tick);
+  })();
   rec.start(100);
-  setTimeout(()=>{ rec.stop(); },dur*1000);
+  setTimeout(()=>rec.stop(),dur*1000);
 }
 
-/* ════════════════════════════════════════════════════════════════
-   UI HELPERS
-════════════════════════════════════════════════════════════════ */
-// slider value display
-function sv(el,id){ document.getElementById(id).textContent=parseFloat(el.value).toFixed(2).replace(/\.?0+$/,''); }
-function svp(el,id){ document.getElementById(id).textContent=Math.round(el.value*100)+'%'; }
-
-function toggleSec(hdr){
-  hdr.classList.toggle('collapsed');
-  hdr.nextElementSibling.classList.toggle('hidden');
-}
-
+/* ════════════════════════════
+   HELPERS
+════════════════════════════ */
+function sv(el,id){document.getElementById(id).textContent=parseFloat(el.value).toFixed(2).replace(/\.?0+$/,'');}
+function svp(el,id){document.getElementById(id).textContent=Math.round(el.value*100)+'%';}
+function toggleSec(hdr){hdr.classList.toggle('collapsed');hdr.nextElementSibling.classList.toggle('hidden');}
 function updateHUD(){
-  document.getElementById('hud').textContent =
-    `${S.cw} × ${S.ch} · ${S.points.length} point${S.points.length!==1?'s':''}`;
+  document.getElementById('hud').textContent=`${S.cw} × ${S.ch} · ${S.points.length} point${S.points.length!==1?'s':''}`;
 }
 
-/* ════════════════════════════════════════════════════════════════
-   KEYBOARD
-════════════════════════════════════════════════════════════════ */
+/* ════════════════════════════
+   KEYBOARD — Ctrl+S, Ctrl+A only (no D shortcut)
+════════════════════════════ */
 document.addEventListener('keydown',e=>{
-  if(['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName)) return;
-  if(e.key==='a'||e.key==='A') setTool('add');
-  if(e.key==='s'||e.key==='S') setTool('select');
-  if(e.key==='d'||e.key==='D') setTool('delete');
-  if(e.key==='Escape'){ S.selId=null; renderPickers(); renderList(); }
-  if((e.key==='Delete'||e.key==='Backspace') && S.selId) removePoint(S.selId);
+  const inInput=['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName);
+
+  // Ctrl+S = Select tool, Ctrl+A = Add tool
+  if(e.ctrlKey&&!e.shiftKey&&!e.altKey){
+    if(e.key==='s'||e.key==='S'){e.preventDefault();setTool('select');return;}
+    if(e.key==='a'||e.key==='A'){e.preventDefault();setTool('add');return;}
+  }
+
+  if(inInput)return;
+  if(e.key==='Escape'){S.selId=null;renderPickers();renderList();}
+  if((e.key==='Delete'||e.key==='Backspace')&&S.selId)removePoint(S.selId);
 });
 
-/* ════════════════════════════════════════════════════════════════
+/* ════════════════════════════
    INIT
-════════════════════════════════════════════════════════════════ */
+════════════════════════════ */
 function init(){
   initGL();
-  glCv.width=grCv.width=S.cw;
-  glCv.height=grCv.height=S.ch;
+  glCv.width=grCv.width=S.cw;glCv.height=grCv.height=S.ch;
   recalcScale();
-
-  // Default color points
   [
-    {x:.20,y:.22,r:255,g: 80,b:130},
-    {x:.78,y:.18,r: 95,g:110,b:255},
-    {x:.18,y:.78,r: 70,g:215,b:175},
-    {x:.80,y:.78,r:255,g:175,b: 65},
-    {x:.50,y:.44,r:170,g: 65,b:255},
+    {x:.20,y:.22,r:255,g:80,b:130},
+    {x:.78,y:.18,r:95,g:110,b:255},
+    {x:.18,y:.78,r:70,g:215,b:175},
+    {x:.80,y:.78,r:255,g:175,b:65},
+    {x:.50,y:.44,r:170,g:65,b:255},
   ].forEach(d=>{
-    S.points.push({id:S.nid++,...d,
-      phX:Math.random()*Math.PI*2,
-      phY:Math.random()*Math.PI*2,
-      fm:0.65+Math.random()*0.7,
-    });
+    S.points.push({id:S.nid++,...d,phX:Math.random()*Math.PI*2,phY:Math.random()*Math.PI*2,fm:.65+Math.random()*.7});
   });
-
-  glRender();
-  renderPickers();
-  renderList();
-  renderPalette();
-  setColor(255,80,130);
-  updateHUD();
-  ensureComp();
-
-  window.addEventListener('resize',()=>{ recalcScale(); renderPickers(); });
+  glRender();renderPickers();renderList();renderPalette();
+  setColor(255,80,130);updateHUD();ensureComp();
+  window.addEventListener('resize',()=>{recalcScale();renderPickers();});
 }
 
 init();
