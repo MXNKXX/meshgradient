@@ -90,27 +90,22 @@ body {
   text-transform: uppercase; letter-spacing: .9px;
 }
 .section-hdr:hover { color: var(--text2); }
-.section-hdr .chev { transition: transform .2s; font-size: 8px; color: var(--text3); }
+.section-hdr .chev { transition: transform .2s; font-size: 8px; }
 .section-hdr.collapsed .chev { transform: rotate(-90deg); }
 .section-body { padding: 4px 14px 14px; }
 .section-body.hidden { display: none; }
-
 .panel-spacer { flex: 1; }
 .panel-footer {
-  flex-shrink: 0;
-  padding: 11px 14px;
+  flex-shrink: 0; padding: 11px 14px;
   border-top: 1px solid var(--border);
-  font-size: 9px; font-weight: 700;
-  color: var(--text3); letter-spacing: 1.8px;
-  text-transform: uppercase;
-  text-align: center;
+  font-size: 9px; font-weight: 700; color: var(--text3);
+  letter-spacing: 1.8px; text-transform: uppercase; text-align: center;
 }
 
 /* ── Form ── */
-.f-label { display: block; font-size: 10px; font-weight: 500; color: var(--text3); margin-bottom: 4px; letter-spacing: .2px; }
+.f-label { display: block; font-size: 10px; font-weight: 500; color: var(--text3); margin-bottom: 4px; }
 .f-row { display: flex; gap: 6px; align-items: flex-end; margin-bottom: 8px; }
 .f-field { flex: 1; }
-
 input[type="number"], input[type="text"] {
   display: block; width: 100%;
   background: var(--input-bg); border: 1px solid var(--border); border-radius: var(--radius);
@@ -163,7 +158,7 @@ input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.2); }
 .btn-w { width: 100%; margin-bottom: 6px; }
 .btn-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 6px; }
 
-/* ── Canvas presets ── */
+/* ── Presets ── */
 .preset-row { display: flex; gap: 5px; margin-bottom: 8px; }
 .preset-btn {
   flex: 1; padding: 5px 2px; border-radius: var(--radius);
@@ -173,13 +168,12 @@ input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.2); }
 }
 .preset-btn:hover { border-color: var(--border2); color: var(--text); }
 .preset-btn.active { background: rgba(108,99,255,.18); border-color: var(--accent); color: var(--accent2); }
-
 .orient-row { display: flex; gap: 5px; margin-bottom: 10px; }
 .orient-btn {
   flex: 1; padding: 5px 4px; border-radius: var(--radius);
   background: var(--panel2); border: 1px solid var(--border);
   color: var(--text2); font-size: 10px; font-weight: 500;
-  cursor: pointer; transition: all .15s; text-align: center;
+  cursor: pointer; transition: all .15s;
   display: flex; align-items: center; justify-content: center; gap: 4px;
 }
 .orient-btn:hover { border-color: var(--border2); color: var(--text); }
@@ -206,7 +200,7 @@ input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.2); }
 .rgb-ch { position: absolute; left: 6px; top: 50%; transform: translateY(-50%); font-size: 9px; font-weight: 700; color: var(--text3); pointer-events: none; }
 .rgb-inp { padding-left: 17px !important; text-align: right; }
 
-/* saved palette */
+/* ── Saved palette ── */
 .saved-pal { display: flex; flex-wrap: wrap; gap: 5px; padding-top: 4px; }
 .pal-wrap { position: relative; width: 22px; height: 22px; flex-shrink: 0; }
 .pal-sw {
@@ -255,19 +249,40 @@ input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.2); }
 }
 #glCanvas { display: block; }
 #grainCanvas { position: absolute; top: 0; left: 0; pointer-events: none; mix-blend-mode: overlay; }
-.pickers-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
 
+/* ── Ring SVG overlay ── */
+#ringSvg {
+  position: absolute; top: 0; left: 0;
+  pointer-events: none; overflow: visible;
+  width: 100%; height: 100%;
+}
+#ringSvg .ring-handle {
+  cursor: grab;
+  pointer-events: all;
+}
+#ringSvg .ring-handle:active { cursor: grabbing; }
+
+/* ── Pickers layer ── */
+.pickers-layer {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none;
+}
 .picker {
   position: absolute; width: 18px; height: 18px; border-radius: 50%;
   border: 2.5px solid rgba(255,255,255,.9);
   box-shadow: 0 0 0 1.5px rgba(0,0,0,.5),0 2px 7px rgba(0,0,0,.6);
   transform: translate(-50%,-50%); cursor: grab; pointer-events: all;
-  transition: box-shadow .12s,transform .12s; z-index: 10;
+  transition: box-shadow .12s, transform .12s; z-index: 10;
 }
 .picker:hover { box-shadow: 0 0 0 2px rgba(255,255,255,.7),0 2px 9px rgba(0,0,0,.7); transform: translate(-50%,-50%) scale(1.18); }
-.picker.selected { border-color: #fff; box-shadow: 0 0 0 2.5px var(--accent),0 2px 9px rgba(0,0,0,.7); transform: translate(-50%,-50%) scale(1.22); z-index: 20; }
+.picker.selected {
+  border-color: #fff;
+  box-shadow: 0 0 0 2.5px var(--accent),0 2px 9px rgba(0,0,0,.7);
+  transform: translate(-50%,-50%) scale(1.22); z-index: 20;
+}
 .picker:active { cursor: grabbing; }
 
+/* ── HUD ── */
 .canvas-hud {
   position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%);
   background: rgba(0,0,0,.65); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
@@ -339,7 +354,6 @@ select {
   background-repeat: no-repeat; background-position: right 8px center; padding-right: 24px;
 }
 select:focus { border-color: var(--accent); }
-
 .hint { color: var(--text3); font-size: 9px; line-height: 1.6; margin-top: 2px; }
 .empty-hint { color: var(--text3); font-size: 10px; padding: 4px 0 2px; }
 
@@ -348,7 +362,6 @@ select:focus { border-color: var(--accent); }
 </head>
 <body>
 
-<!-- Topbar -->
 <header class="topbar">
   <div class="app-logo"></div>
   <span class="app-name">Mesh Gradient</span>
@@ -374,10 +387,9 @@ select:focus { border-color: var(--accent); }
 
 <main class="workspace">
 
-  <!-- ═══ LEFT PANEL ═══ -->
+  <!-- LEFT PANEL -->
   <aside class="panel left">
 
-    <!-- 1. Color Picker — primary tool, top of left -->
     <div class="section">
       <div class="section-hdr" onclick="toggleSec(this)">Color Picker <span class="chev">▾</span></div>
       <div class="section-body">
@@ -392,18 +404,12 @@ select:focus { border-color: var(--accent); }
           </div>
         </div>
         <div class="rgb-grid">
-          <div class="rgb-wrap">
-            <span class="rgb-ch">R</span>
-            <input type="number" class="rgb-inp" id="rInp" value="255" min="0" max="255" oninput="onRgbChange()">
-          </div>
-          <div class="rgb-wrap">
-            <span class="rgb-ch">G</span>
-            <input type="number" class="rgb-inp" id="gInp" value="90" min="0" max="255" oninput="onRgbChange()">
-          </div>
-          <div class="rgb-wrap">
-            <span class="rgb-ch">B</span>
-            <input type="number" class="rgb-inp" id="bInp" value="122" min="0" max="255" oninput="onRgbChange()">
-          </div>
+          <div class="rgb-wrap"><span class="rgb-ch">R</span>
+            <input type="number" class="rgb-inp" id="rInp" value="255" min="0" max="255" oninput="onRgbChange()"></div>
+          <div class="rgb-wrap"><span class="rgb-ch">G</span>
+            <input type="number" class="rgb-inp" id="gInp" value="90" min="0" max="255" oninput="onRgbChange()"></div>
+          <div class="rgb-wrap"><span class="rgb-ch">B</span>
+            <input type="number" class="rgb-inp" id="bInp" value="122" min="0" max="255" oninput="onRgbChange()"></div>
         </div>
         <div style="display:flex;gap:6px;margin-bottom:10px">
           <button class="btn btn-ghost btn-sm" style="flex:1" onclick="applyToSelected()">Apply to Point</button>
@@ -414,48 +420,32 @@ select:focus { border-color: var(--accent); }
       </div>
     </div>
 
-    <!-- 2. Film Grain -->
     <div class="section">
       <div class="section-hdr" onclick="toggleSec(this)">Film Grain <span class="chev">▾</span></div>
       <div class="section-body">
         <div class="tog-row">
           <span class="tog-label">Enable Grain</span>
-          <label class="sw">
-            <input type="checkbox" id="grainOn" onchange="onGrainToggle()">
-            <span class="sw-track"></span>
-          </label>
+          <label class="sw"><input type="checkbox" id="grainOn" onchange="onGrainToggle()"><span class="sw-track"></span></label>
         </div>
         <div id="grainCtrl" style="opacity:.35;pointer-events:none;transition:opacity .2s">
           <div class="sl-row">
             <span class="sl-label">Size</span>
-            <div class="sl-wrap">
-              <input type="range" id="grainSize" min="0.3" max="2.5" step="0.05" value="0.8"
-                oninput="genGrain();sv(this,'grainSizeV')">
-            </div>
+            <div class="sl-wrap"><input type="range" id="grainSize" min="0.3" max="2.5" step="0.05" value="0.8" oninput="genGrain();sv(this,'grainSizeV')"></div>
             <span class="sl-val" id="grainSizeV">0.8</span>
           </div>
           <div class="sl-row">
             <span class="sl-label">Density</span>
-            <div class="sl-wrap">
-              <input type="range" id="grainDensity" min="0.05" max="1" step="0.01" value="0.55"
-                oninput="genGrain();svp(this,'grainDensityV')">
-            </div>
+            <div class="sl-wrap"><input type="range" id="grainDensity" min="0.05" max="1" step="0.01" value="0.55" oninput="genGrain();svp(this,'grainDensityV')"></div>
             <span class="sl-val" id="grainDensityV">55%</span>
           </div>
           <div class="sl-row">
             <span class="sl-label">Roughness</span>
-            <div class="sl-wrap">
-              <input type="range" id="grainRough" min="0" max="1" step="0.01" value="0.5"
-                oninput="genGrain();svp(this,'grainRoughV')">
-            </div>
+            <div class="sl-wrap"><input type="range" id="grainRough" min="0" max="1" step="0.01" value="0.5" oninput="genGrain();svp(this,'grainRoughV')"></div>
             <span class="sl-val" id="grainRoughV">50%</span>
           </div>
           <div class="sl-row">
             <span class="sl-label">Opacity</span>
-            <div class="sl-wrap">
-              <input type="range" id="grainOpac" min="0" max="1" step="0.01" value="0.28"
-                oninput="setGrainOpac();svp(this,'grainOpacV')">
-            </div>
+            <div class="sl-wrap"><input type="range" id="grainOpac" min="0" max="1" step="0.01" value="0.28" oninput="setGrainOpac();svp(this,'grainOpacV')"></div>
             <span class="sl-val" id="grainOpacV">28%</span>
           </div>
           <button class="btn btn-ghost btn-sm btn-w" id="regenBtn">↺ Regenerate</button>
@@ -463,7 +453,6 @@ select:focus { border-color: var(--accent); }
       </div>
     </div>
 
-    <!-- 3. Canvas Size — less frequently adjusted, lower position -->
     <div class="section">
       <div class="section-hdr" onclick="toggleSec(this)">Canvas Size <span class="chev">▾</span></div>
       <div class="section-body">
@@ -475,24 +464,16 @@ select:focus { border-color: var(--accent); }
         </div>
         <div class="orient-row">
           <button class="orient-btn active" id="orientLand" onclick="setOrient('land')">
-            <svg viewBox="0 0 12 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><rect x=".7" y=".7" width="10.6" height="7.6" rx="1.2"/></svg>
-            Landscape
+            <svg viewBox="0 0 12 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><rect x=".7" y=".7" width="10.6" height="7.6" rx="1.2"/></svg>Landscape
           </button>
           <button class="orient-btn" id="orientPort" onclick="setOrient('port')">
-            <svg viewBox="0 0 9 12" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><rect x=".7" y=".7" width="7.6" height="10.6" rx="1.2"/></svg>
-            Portrait
+            <svg viewBox="0 0 9 12" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><rect x=".7" y=".7" width="7.6" height="10.6" rx="1.2"/></svg>Portrait
           </button>
         </div>
         <div class="f-row">
-          <div class="f-field">
-            <label class="f-label">Width</label>
-            <input type="number" id="canvasW" value="1080" min="100" max="8000">
-          </div>
+          <div class="f-field"><label class="f-label">Width</label><input type="number" id="canvasW" value="1080" min="100" max="8000"></div>
           <span style="color:var(--text3);font-size:14px;margin-bottom:6px">×</span>
-          <div class="f-field">
-            <label class="f-label">Height</label>
-            <input type="number" id="canvasH" value="1080" min="100" max="8000">
-          </div>
+          <div class="f-field"><label class="f-label">Height</label><input type="number" id="canvasH" value="1080" min="100" max="8000"></div>
         </div>
         <button class="btn btn-second btn-w" onclick="applySize()">Apply Custom Size</button>
       </div>
@@ -501,11 +482,14 @@ select:focus { border-color: var(--accent); }
     <div class="panel-spacer"></div>
   </aside>
 
-  <!-- ═══ CENTER ═══ -->
+  <!-- CENTER -->
   <div class="canvas-area" id="canvasArea">
     <div class="canvas-wrap" id="canvasWrap">
       <canvas id="glCanvas"></canvas>
       <canvas id="grainCanvas"></canvas>
+      <!-- Ring overlay (Illustrator-style spread handles) -->
+      <svg id="ringSvg"></svg>
+      <!-- Picker dots -->
       <div class="pickers-layer" id="pickersLayer"></div>
       <div class="rec-progress" id="recProgress" style="width:0%"></div>
     </div>
@@ -517,10 +501,9 @@ select:focus { border-color: var(--accent); }
     </div>
   </div>
 
-  <!-- ═══ RIGHT PANEL ═══ -->
+  <!-- RIGHT PANEL -->
   <aside class="panel right">
 
-    <!-- 1. Color Points — main interaction list -->
     <div class="section">
       <div class="section-hdr" onclick="toggleSec(this)">Color Points <span class="chev">▾</span></div>
       <div class="section-body">
@@ -533,59 +516,46 @@ select:focus { border-color: var(--accent); }
       </div>
     </div>
 
-    <!-- 2. Gradient -->
     <div class="section">
       <div class="section-hdr" onclick="toggleSec(this)">Gradient <span class="chev">▾</span></div>
       <div class="section-body">
         <div class="sl-row">
-          <span class="sl-label">Falloff</span>
+          <span class="sl-label">Hardness</span>
           <div class="sl-wrap">
-            <input type="range" id="falloff" min="0.5" max="8" step="0.1" value="2"
-              oninput="onFalloff();sv(this,'falloffV')">
+            <input type="range" id="hardness" min="0.3" max="8" step="0.1" value="2.5" oninput="onHardness();sv(this,'hardnessV')">
           </div>
-          <span class="sl-val" id="falloffV">2.0</span>
+          <span class="sl-val" id="hardnessV">2.5</span>
         </div>
-        <div class="hint">Low = soft blend &nbsp;·&nbsp; High = sharp edges</div>
+        <div class="hint" style="margin-bottom:8px">Low = soft center &nbsp;·&nbsp; High = sharp edge</div>
+        <div class="hint" style="color:var(--text3);font-size:9px;line-height:1.7;padding:7px 9px;background:var(--panel2);border-radius:5px;border:1px solid var(--border)">
+          Select a point → drag the <strong style="color:var(--text2)">circle handle</strong> to set its spread radius
+        </div>
       </div>
     </div>
 
-    <!-- 3. Animation -->
     <div class="section">
       <div class="section-hdr" onclick="toggleSec(this)">Animation <span class="chev">▾</span></div>
       <div class="section-body">
         <div class="tog-row">
           <span class="tog-label">Enable Animation</span>
-          <label class="sw">
-            <input type="checkbox" id="animOn" onchange="onAnimToggle()">
-            <span class="sw-track"></span>
-          </label>
+          <label class="sw"><input type="checkbox" id="animOn" onchange="onAnimToggle()"><span class="sw-track"></span></label>
         </div>
         <div id="animCtrl" style="opacity:.35;pointer-events:none;transition:opacity .2s">
           <div class="sl-row">
             <span class="sl-label">Speed</span>
-            <div class="sl-wrap">
-              <input type="range" id="animSpeed" min="0.02" max="2" step="0.01" value="0.25"
-                oninput="sv(this,'animSpeedV')">
-            </div>
+            <div class="sl-wrap"><input type="range" id="animSpeed" min="0.02" max="2" step="0.01" value="0.25" oninput="sv(this,'animSpeedV')"></div>
             <span class="sl-val" id="animSpeedV">0.25</span>
           </div>
           <div class="sl-row">
             <span class="sl-label">Intensity</span>
-            <div class="sl-wrap">
-              <input type="range" id="animIntensity" min="0.01" max="0.35" step="0.005" value="0.07"
-                oninput="svp(this,'animIntensityV')">
-            </div>
+            <div class="sl-wrap"><input type="range" id="animIntensity" min="0.01" max="0.35" step="0.005" value="0.07" oninput="svp(this,'animIntensityV')"></div>
             <span class="sl-val" id="animIntensityV">7%</span>
           </div>
-          <div class="anim-live">
-            <div class="anim-dot"></div>
-            <span>Animating live</span>
-          </div>
+          <div class="anim-live"><div class="anim-dot"></div><span>Animating live</span></div>
         </div>
       </div>
     </div>
 
-    <!-- 4. Export -->
     <div class="section">
       <div class="section-hdr" onclick="toggleSec(this)">Export <span class="chev">▾</span></div>
       <div class="section-body">
@@ -624,9 +594,9 @@ select:focus { border-color: var(--accent); }
 </main>
 
 <script>
-/* ════════════════════════════
+/* ════════════════════════════════
    STATE
-════════════════════════════ */
+════════════════════════════════ */
 const S = {
   cw:1080, ch:1080, scale:1,
   points:[], selId:null, nid:1,
@@ -638,41 +608,61 @@ const S = {
   ],
   grainOn:false, grainOpac:0.28,
   animOn:false, animT:0, lastTs:0,
-  falloff:2, drag:null, recording:false,
+  hardness:2.5,
+  drag:null,        // picker drag
+  radiusDrag:null,  // ring handle drag
+  recording:false,
   curPreset:{w:1080,h:1080}, orient:'land',
 };
 
-/* ════════════════════════════
-   WEBGL
-════════════════════════════ */
-const glCv = document.getElementById('glCanvas');
-const grCv = document.getElementById('grainCanvas');
-const plyr = document.getElementById('pickersLayer');
-let gl, prog, uRes, uN, uPts, uCols, uPow;
+function defaultRadius(){ return 0.38 * Math.min(S.cw, S.ch); }
 
-const VERT=`attribute vec2 aP;void main(){gl_Position=vec4(aP,0.,1.);}`;
-const FRAG=`
+/* ════════════════════════════════
+   WEBGL — per-point Gaussian (pixel space)
+════════════════════════════════ */
+const glCv  = document.getElementById('glCanvas');
+const grCv  = document.getElementById('grainCanvas');
+const plyr  = document.getElementById('pickersLayer');
+const ringSvg = document.getElementById('ringSvg');
+
+let gl, prog;
+let uRes, uN, uPts, uCols, uRadii, uHard;
+
+// Shader: pixel-space distance, per-point Gaussian weight
+const VERT = `attribute vec2 aP;void main(){gl_Position=vec4(aP,0.,1.);}`;
+const FRAG = `
 precision highp float;
-uniform vec2 uRes;uniform int uN;
-uniform vec2 uPts[32];uniform vec3 uCols[32];uniform float uPow;
+uniform vec2  uRes;
+uniform int   uN;
+uniform vec2  uPts[32];    /* pixel coords */
+uniform vec3  uCols[32];
+uniform float uRadii[32];  /* radius in pixels */
+uniform float uHard;       /* gaussian exponent multiplier */
+
 void main(){
-  vec2 uv=gl_FragCoord.xy/uRes;uv.y=1.-uv.y;
-  if(uN==0){gl_FragColor=vec4(.12,.12,.15,1.);return;}
-  if(uN==1){gl_FragColor=vec4(uCols[0],1.);return;}
-  float wSum=0.;vec3 col=vec3(0.);
-  for(int i=0;i<32;i++){
-    if(i>=uN)break;
-    float d=distance(uv,uPts[i]);
-    if(d<.0005){gl_FragColor=vec4(uCols[i],1.);return;}
-    float w=1./pow(d,uPow);wSum+=w;col+=w*uCols[i];
+  vec2 px = vec2(gl_FragCoord.x, uRes.y - gl_FragCoord.y);
+
+  if(uN == 0){ gl_FragColor = vec4(0.12,0.12,0.15,1.); return; }
+  if(uN == 1){ gl_FragColor = vec4(uCols[0],1.); return; }
+
+  float wSum = 0.0;
+  vec3  col  = vec3(0.0);
+  for(int i = 0; i < 32; i++){
+    if(i >= uN) break;
+    float d  = distance(px, uPts[i]);
+    float r  = max(uRadii[i], 1.0);
+    float nd = d / r;
+    float w  = exp(-uHard * nd * nd);
+    wSum += w;
+    col  += w * uCols[i];
   }
-  gl_FragColor=vec4(col/wSum,1.);
+  gl_FragColor = vec4(col / max(wSum, 1e-6), 1.0);
 }`;
 
 function initGL(){
-  gl=glCv.getContext('webgl',{preserveDrawingBuffer:true,antialias:false});
+  gl = glCv.getContext('webgl',{preserveDrawingBuffer:true,antialias:false});
   if(!gl){alert('WebGL not supported');return;}
-  function sh(t,s){const x=gl.createShader(t);gl.shaderSource(x,s);gl.compileShader(x);return x;}
+  function sh(t,s){const x=gl.createShader(t);gl.shaderSource(x,s);gl.compileShader(x);if(!gl.getShaderParameter(x,gl.COMPILE_STATUS))console.error(gl.getShaderInfoLog(x));return x;}
   prog=gl.createProgram();
   gl.attachShader(prog,sh(gl.VERTEX_SHADER,VERT));
   gl.attachShader(prog,sh(gl.FRAGMENT_SHADER,FRAG));
@@ -682,30 +672,44 @@ function initGL(){
   gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);
   const aP=gl.getAttribLocation(prog,'aP');
   gl.enableVertexAttribArray(aP);gl.vertexAttribPointer(aP,2,gl.FLOAT,false,0,0);
-  uRes=gl.getUniformLocation(prog,'uRes');uN=gl.getUniformLocation(prog,'uN');
-  uPts=gl.getUniformLocation(prog,'uPts[0]');uCols=gl.getUniformLocation(prog,'uCols[0]');
-  uPow=gl.getUniformLocation(prog,'uPow');
+  uRes   = gl.getUniformLocation(prog,'uRes');
+  uN     = gl.getUniformLocation(prog,'uN');
+  uPts   = gl.getUniformLocation(prog,'uPts[0]');
+  uCols  = gl.getUniformLocation(prog,'uCols[0]');
+  uRadii = gl.getUniformLocation(prog,'uRadii[0]');
+  uHard  = gl.getUniformLocation(prog,'uHard');
 }
 
 function glRender(pts){
-  pts=pts||S.points;
+  pts = pts || S.points;
   gl.viewport(0,0,S.cw,S.ch);
-  gl.uniform2f(uRes,S.cw,S.ch);gl.uniform1i(uN,pts.length);gl.uniform1f(uPow,S.falloff);
-  const pa=new Float32Array(64),ca=new Float32Array(96);
-  pts.forEach((p,i)=>{pa[i*2]=p.x;pa[i*2+1]=p.y;ca[i*3]=p.r/255;ca[i*3+1]=p.g/255;ca[i*3+2]=p.b/255;});
-  gl.uniform2fv(uPts,pa);gl.uniform3fv(uCols,ca);
+  gl.uniform2f(uRes, S.cw, S.ch);
+  gl.uniform1i(uN, pts.length);
+  gl.uniform1f(uHard, S.hardness);
+  const pa=new Float32Array(64), ca=new Float32Array(96), ra=new Float32Array(32);
+  pts.forEach((p,i)=>{
+    pa[i*2]   = p.x * S.cw;   // pixel x
+    pa[i*2+1] = p.y * S.ch;   // pixel y
+    ca[i*3]   = p.r/255; ca[i*3+1]=p.g/255; ca[i*3+2]=p.b/255;
+    ra[i]     = p.radius;
+  });
+  gl.uniform2fv(uPts, pa);
+  gl.uniform3fv(uCols, ca);
+  gl.uniform1fv(uRadii, ra);
   gl.drawArrays(gl.TRIANGLE_STRIP,0,4);
 }
 
-/* ════════════════════════════
+/* ════════════════════════════════
    CANVAS SIZE
-════════════════════════════ */
+════════════════════════════════ */
 function recalcScale(){
   const r=document.getElementById('canvasArea').getBoundingClientRect();
   S.scale=Math.min((r.width-56)/S.cw,(r.height-56)/S.ch,1);
-  const dw=Math.round(S.cw*S.scale),dh=Math.round(S.ch*S.scale);
+  const dw=Math.round(S.cw*S.scale), dh=Math.round(S.ch*S.scale);
   glCv.style.width=grCv.style.width=dw+'px';
   glCv.style.height=grCv.style.height=dh+'px';
+  ringSvg.setAttribute('width',dw);
+  ringSvg.setAttribute('height',dh);
   updateHUD();
 }
 
@@ -716,7 +720,7 @@ function resizeCanvas(w,h){
   document.getElementById('canvasH').value=h;
   recalcScale();glRender();
   if(S.grainOn)genGrain();
-  renderPickers();updateHUD();
+  renderPickers();renderRing();updateHUD();
 }
 
 function applySize(){
@@ -725,21 +729,18 @@ function applySize(){
   document.querySelectorAll('.preset-btn').forEach(b=>b.classList.remove('active'));
   resizeCanvas(w,h);
 }
-
 function pickPreset(btn,w,h){
   S.curPreset={w,h};
   document.querySelectorAll('.preset-btn').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
   applyOrient(S.orient);
 }
-
 function setOrient(o){
   S.orient=o;
   document.getElementById('orientLand').classList.toggle('active',o==='land');
   document.getElementById('orientPort').classList.toggle('active',o==='port');
   applyOrient(o);
 }
-
 function applyOrient(o){
   let{w,h}=S.curPreset;
   if(o==='port'&&w>h)[w,h]=[h,w];
@@ -747,28 +748,24 @@ function applyOrient(o){
   resizeCanvas(w,h);
 }
 
-/* ════════════════════════════
-   FILM GRAIN — pixel-only, size 0.3–2.5 → blur 0–2.5px
-════════════════════════════ */
+/* ════════════════════════════════
+   FILM GRAIN
+════════════════════════════════ */
 function genGrain(){
   if(!S.grainOn)return;
   const W=S.cw,H=S.ch;
   const size    =+document.getElementById('grainSize').value;
   const density =+document.getElementById('grainDensity').value;
   const rough   =+document.getElementById('grainRough').value;
-
-  // Work at reduced res for performance, then scale up
   const GW=Math.min(W,1200),GH=Math.min(H,1200);
   const off=document.createElement('canvas');
   off.width=GW;off.height=GH;
   const ctx=off.getContext('2d');
   const id=ctx.createImageData(GW,GH);
   const d=id.data;
-
   for(let i=0;i<GW*GH;i++){
     if(Math.random()<density){
       let v=Math.random()*255;
-      // roughness = contrast
       v=128+(v-128)*(1+rough*3.5);
       v=Math.max(0,Math.min(255,v));
       d[i*4]=d[i*4+1]=d[i*4+2]=Math.round(v);
@@ -776,27 +773,22 @@ function genGrain(){
     }
   }
   ctx.putImageData(id,0,0);
-
   const gc=grCv.getContext('2d');
   gc.clearRect(0,0,W,H);
-  // blur maps size 0.3→0px, 2.5→2px
   const blur=Math.max(0,(size-0.3)*1.0);
   if(blur>0){
     const tmp=document.createElement('canvas');tmp.width=GW;tmp.height=GH;
-    const tc=tmp.getContext('2d');
-    tc.filter=`blur(${blur}px)`;tc.drawImage(off,0,0);tc.filter='none';
+    const tc=tmp.getContext('2d');tc.filter=`blur(${blur}px)`;tc.drawImage(off,0,0);tc.filter='none';
     gc.drawImage(tmp,0,0,W,H);
   } else {
     gc.drawImage(off,0,0,W,H);
   }
   setGrainOpac();
 }
-
 function setGrainOpac(){
   S.grainOpac=+document.getElementById('grainOpac').value;
   grCv.style.opacity=S.grainOn?S.grainOpac:0;
 }
-
 function onGrainToggle(){
   S.grainOn=document.getElementById('grainOn').checked;
   const ctrl=document.getElementById('grainCtrl');
@@ -804,12 +796,11 @@ function onGrainToggle(){
   ctrl.style.pointerEvents=S.grainOn?'all':'none';
   if(S.grainOn)genGrain();else grCv.style.opacity=0;
 }
-
 document.getElementById('regenBtn').addEventListener('click',()=>{if(S.grainOn)genGrain();});
 
-/* ════════════════════════════
+/* ════════════════════════════════
    COLOR
-════════════════════════════ */
+════════════════════════════════ */
 function toHex(r,g,b){return'#'+[r,g,b].map(v=>v.toString(16).padStart(2,'0')).join('').toUpperCase();}
 function fromHex(h){
   h=h.replace('#','');if(h.length!==6)return null;
@@ -828,11 +819,12 @@ function setColor(r,g,b){
   document.getElementById('bInp').value=b;
   document.getElementById('nativePicker').value=hex;
 }
-
 function onNativePick(hex){const c=fromHex(hex);if(c)setColor(c.r,c.g,c.b);}
 function onHexInput(v){
   const hex=v.startsWith('#')?v:'#'+v;const c=fromHex(hex);
-  if(c){S.color=c;document.getElementById('activeSwatch').style.background=hex;document.getElementById('rInp').value=c.r;document.getElementById('gInp').value=c.g;document.getElementById('bInp').value=c.b;document.getElementById('nativePicker').value=hex;}
+  if(c){S.color=c;document.getElementById('activeSwatch').style.background=hex;
+    document.getElementById('rInp').value=c.r;document.getElementById('gInp').value=c.g;
+    document.getElementById('bInp').value=c.b;document.getElementById('nativePicker').value=hex;}
 }
 function onHexBlur(){setColor(S.color.r,S.color.g,S.color.b);}
 function onRgbChange(){
@@ -843,43 +835,21 @@ function onRgbChange(){
   );
 }
 
-function saveColor(){
-  S.palette.push({...S.color});
-  renderPalette();
-}
-
-function deletePaletteColor(i){
-  S.palette.splice(i,1);
-  renderPalette();
-}
+function saveColor(){S.palette.push({...S.color});renderPalette();}
+function deletePaletteColor(i){S.palette.splice(i,1);renderPalette();}
 
 function renderPalette(){
   const row=document.getElementById('palRow');
   row.innerHTML='';
   S.palette.forEach((c,i)=>{
-    const wrap=document.createElement('div');
-    wrap.className='pal-wrap';
-
-    const sw=document.createElement('div');
-    sw.className='pal-sw';
-    sw.style.background=toHex(c.r,c.g,c.b);
-    sw.title=toHex(c.r,c.g,c.b);
-    sw.onclick=()=>{
-      setColor(c.r,c.g,c.b);
-      document.querySelectorAll('.pal-sw').forEach(s=>s.classList.remove('active'));
-      sw.classList.add('active');
-    };
-
-    const del=document.createElement('button');
-    del.className='pal-del';del.textContent='×';
-    del.title='Remove';
-    del.onclick=(e)=>{e.stopPropagation();deletePaletteColor(i);};
-
-    wrap.appendChild(sw);wrap.appendChild(del);
-    row.appendChild(wrap);
+    const wrap=document.createElement('div');wrap.className='pal-wrap';
+    const sw=document.createElement('div');sw.className='pal-sw';sw.style.background=toHex(c.r,c.g,c.b);sw.title=toHex(c.r,c.g,c.b);
+    sw.onclick=()=>{setColor(c.r,c.g,c.b);document.querySelectorAll('.pal-sw').forEach(s=>s.classList.remove('active'));sw.classList.add('active');};
+    const del=document.createElement('button');del.className='pal-del';del.textContent='×';
+    del.onclick=e=>{e.stopPropagation();deletePaletteColor(i);};
+    wrap.appendChild(sw);wrap.appendChild(del);row.appendChild(wrap);
   });
-  const add=document.createElement('div');
-  add.className='pal-add';add.textContent='+';add.onclick=saveColor;
+  const add=document.createElement('div');add.className='pal-add';add.textContent='+';add.onclick=saveColor;
   row.appendChild(add);
 }
 
@@ -889,14 +859,15 @@ function applyToSelected(){
   if(p){p.r=S.color.r;p.g=S.color.g;p.b=S.color.b;glRender();renderPickers();renderList();}
 }
 
-/* ════════════════════════════
+/* ════════════════════════════════
    POINTS
-════════════════════════════ */
+════════════════════════════════ */
 function addPoint(nx,ny){
   const pt={
-    id:S.nid++,x:nx,y:ny,
-    r:S.color.r,g:S.color.g,b:S.color.b,
-    phX:Math.random()*Math.PI*2,phY:Math.random()*Math.PI*2,
+    id:S.nid++, x:nx, y:ny,
+    r:S.color.r, g:S.color.g, b:S.color.b,
+    radius: defaultRadius(),
+    phX:Math.random()*Math.PI*2, phY:Math.random()*Math.PI*2,
     fm:.65+Math.random()*.7,
   };
   S.points.push(pt);
@@ -906,16 +877,14 @@ function addPoint(nx,ny){
 function removePoint(id){
   S.points=S.points.filter(p=>p.id!==id);
   if(S.selId===id)S.selId=null;
-  glRender();renderPickers();renderList();updateHUD();
+  glRender();renderPickers();renderRing();renderList();updateHUD();
 }
-
 function clearAll(){
   S.points=[];S.selId=null;
-  glRender();renderPickers();renderList();updateHUD();
+  glRender();renderPickers();renderRing();renderList();updateHUD();
 }
-
 function sel(id){
-  S.selId=id;renderPickers();renderList();
+  S.selId=id;renderPickers();renderRing();renderList();
   const p=S.points.find(p=>p.id===id);
   if(p)setColor(p.r,p.g,p.b);
 }
@@ -931,13 +900,68 @@ function animPts(t){
   }));
 }
 
-/* ════════════════════════════
+/* ════════════════════════════════
+   RING (Illustrator-style spread handle)
+════════════════════════════════ */
+const NS = 'http://www.w3.org/2000/svg';
+
+function renderRing(){
+  // Clear
+  while(ringSvg.firstChild) ringSvg.removeChild(ringSvg.firstChild);
+
+  if(!S.selId) return;
+  const p = S.points.find(p=>p.id===S.selId);
+  if(!p) return;
+
+  const sc   = S.scale;
+  const cx   = p.x * S.cw * sc;
+  const cy   = p.y * S.ch * sc;
+  const rDisp= p.radius * sc;  // radius in screen pixels
+
+  // Subtle fill
+  const fill = document.createElementNS(NS,'circle');
+  fill.setAttribute('cx',cx); fill.setAttribute('cy',cy); fill.setAttribute('r',rDisp);
+  fill.setAttribute('fill','rgba(255,255,255,0.04)');
+  fill.setAttribute('stroke','none');
+  ringSvg.appendChild(fill);
+
+  // Dashed ring
+  const ring = document.createElementNS(NS,'circle');
+  ring.setAttribute('cx',cx); ring.setAttribute('cy',cy); ring.setAttribute('r',rDisp);
+  ring.setAttribute('fill','none');
+  ring.setAttribute('stroke','rgba(255,255,255,0.65)');
+  ring.setAttribute('stroke-width','1.5');
+  ring.setAttribute('stroke-dasharray','5 3');
+  ringSvg.appendChild(ring);
+
+  // Handle — positioned at right edge
+  const hx = cx + rDisp, hy = cy;
+  const handleOuter = document.createElementNS(NS,'circle');
+  handleOuter.setAttribute('cx',hx); handleOuter.setAttribute('cy',hy); handleOuter.setAttribute('r','6');
+  handleOuter.setAttribute('fill','rgba(0,0,0,0.35)');
+  handleOuter.setAttribute('stroke','none');
+  ringSvg.appendChild(handleOuter);
+
+  const handle = document.createElementNS(NS,'circle');
+  handle.setAttribute('cx',hx); handle.setAttribute('cy',hy); handle.setAttribute('r','4.5');
+  handle.setAttribute('fill','white');
+  handle.setAttribute('stroke','rgba(108,99,255,0.8)');
+  handle.setAttribute('stroke-width','1.5');
+  handle.classList.add('ring-handle');
+  handle.addEventListener('mousedown',e=>{
+    e.stopPropagation();
+    S.radiusDrag={id:p.id};
+  });
+  ringSvg.appendChild(handle);
+}
+
+/* ════════════════════════════════
    PICKERS
-════════════════════════════ */
+════════════════════════════════ */
 function renderPickers(){
-  const sc=S.scale,W=S.cw,H=S.ch;
+  const sc=S.scale, W=S.cw, H=S.ch;
   const ap=animPts(S.animT);
-  while(plyr.children.length>S.points.length)plyr.removeChild(plyr.lastChild);
+  while(plyr.children.length>S.points.length) plyr.removeChild(plyr.lastChild);
   while(plyr.children.length<S.points.length){
     const el=document.createElement('div');
     el.className='picker';
@@ -945,7 +969,7 @@ function renderPickers(){
     plyr.appendChild(el);
   }
   S.points.forEach((orig,i)=>{
-    const a=ap[i],el=plyr.children[i];
+    const a=ap[i], el=plyr.children[i];
     el.dataset.id=orig.id;
     el.className='picker'+(orig.id===S.selId?' selected':'');
     el.style.background=toHex(orig.r,orig.g,orig.b);
@@ -963,9 +987,9 @@ function pickerDown(e){
   if(p)S.drag={id,mx0:e.clientX,my0:e.clientY,ox:p.x,oy:p.y};
 }
 
-/* ════════════════════════════
+/* ════════════════════════════════
    POINTS LIST
-════════════════════════════ */
+════════════════════════════════ */
 function renderList(){
   const el=document.getElementById('ptList');
   if(!S.points.length){
@@ -976,39 +1000,34 @@ function renderList(){
   S.points.forEach((p,i)=>{
     const item=document.createElement('div');
     item.className='pt-item'+(p.id===S.selId?' sel':'');
-    item.dataset.id=p.id;
 
     const swWrap=document.createElement('div');
-    swWrap.className='pt-sw';
-    swWrap.style.background=toHex(p.r,p.g,p.b);
-    const nat=document.createElement('input');
-    nat.type='color';nat.value=toHex(p.r,p.g,p.b);
+    swWrap.className='pt-sw';swWrap.style.background=toHex(p.r,p.g,p.b);
+    const nat=document.createElement('input');nat.type='color';nat.value=toHex(p.r,p.g,p.b);
     nat.addEventListener('input',ev=>{
       ev.stopPropagation();
       const c=fromHex(ev.target.value);
-      if(c){p.r=c.r;p.g=c.g;p.b=c.b;swWrap.style.background=ev.target.value;hexInpEl.value=ev.target.value.toUpperCase();setColor(c.r,c.g,c.b);glRender();renderPickers();}
+      if(c){p.r=c.r;p.g=c.g;p.b=c.b;swWrap.style.background=ev.target.value;hexEl.value=ev.target.value.toUpperCase();setColor(c.r,c.g,c.b);glRender();renderPickers();}
     });
     swWrap.appendChild(nat);
 
-    const hexInpEl=document.createElement('input');
-    hexInpEl.type='text';hexInpEl.className='pt-hex-inp';
-    hexInpEl.value=toHex(p.r,p.g,p.b);hexInpEl.maxLength=7;
-    hexInpEl.addEventListener('click',ev=>ev.stopPropagation());
-    hexInpEl.addEventListener('input',ev=>{
+    const hexEl=document.createElement('input');
+    hexEl.type='text';hexEl.className='pt-hex-inp';hexEl.value=toHex(p.r,p.g,p.b);hexEl.maxLength=7;
+    hexEl.addEventListener('click',ev=>ev.stopPropagation());
+    hexEl.addEventListener('input',ev=>{
       ev.stopPropagation();
       const raw=ev.target.value;
       const c=fromHex(raw.startsWith('#')?raw:'#'+raw);
       if(c){p.r=c.r;p.g=c.g;p.b=c.b;swWrap.style.background=toHex(c.r,c.g,c.b);nat.value=toHex(c.r,c.g,c.b);glRender();renderPickers();}
     });
-    hexInpEl.addEventListener('blur',()=>{hexInpEl.value=toHex(p.r,p.g,p.b);});
+    hexEl.addEventListener('blur',()=>{hexEl.value=toHex(p.r,p.g,p.b);});
 
-    const del=document.createElement('button');
-    del.className='pt-del';del.innerHTML='&times;';
+    const del=document.createElement('button');del.className='pt-del';del.innerHTML='&times;';
     del.addEventListener('click',ev=>{ev.stopPropagation();removePoint(p.id);});
 
-    item.appendChild(swWrap);item.appendChild(hexInpEl);item.appendChild(del);
+    item.appendChild(swWrap);item.appendChild(hexEl);item.appendChild(del);
     item.addEventListener('mousedown',ev=>{
-      if(ev.target===hexInpEl||ev.target===nat)return;
+      if(ev.target===hexEl||ev.target===nat)return;
       sel(p.id);
     });
     el.appendChild(item);
@@ -1016,36 +1035,58 @@ function renderList(){
   updateHUD();
 }
 
-/* ════════════════════════════
-   MOUSE
-════════════════════════════ */
+/* ════════════════════════════════
+   MOUSE EVENTS
+════════════════════════════════ */
 document.getElementById('canvasWrap').addEventListener('mousedown',e=>{
-  if(e.target.classList.contains('picker'))return;
+  if(e.target.classList.contains('picker')) return;
+  if(e.target.classList.contains('ring-handle')) return;
   if(S.tool==='add'){
     const r=glCv.getBoundingClientRect();
     const nx=clamp((e.clientX-r.left)/(S.cw*S.scale),0,1);
     const ny=clamp((e.clientY-r.top)/(S.ch*S.scale),0,1);
     addPoint(nx,ny);
   } else if(S.tool==='select'){
-    S.selId=null;renderPickers();renderList();
+    S.selId=null;renderPickers();renderRing();renderList();
   }
 });
 
 document.addEventListener('mousemove',e=>{
-  if(!S.drag)return;
-  const{id,mx0,my0,ox,oy}=S.drag;
-  const p=S.points.find(p=>p.id===id);
-  if(p){
-    p.x=clamp(ox+(e.clientX-mx0)/(S.cw*S.scale),0,1);
-    p.y=clamp(oy+(e.clientY-my0)/(S.ch*S.scale),0,1);
-    glRender();renderPickers();
+  // ── Radius drag
+  if(S.radiusDrag){
+    const p=S.points.find(p=>p.id===S.radiusDrag.id);
+    if(p){
+      const rect=glCv.getBoundingClientRect();
+      const cx=rect.left+p.x*S.cw*S.scale;
+      const cy=rect.top+p.y*S.ch*S.scale;
+      const dx=e.clientX-cx, dy=e.clientY-cy;
+      const screenR=Math.sqrt(dx*dx+dy*dy);
+      // Convert screen px → canvas px, clamp 20px – max(cw,ch)*1.5
+      p.radius=clamp(screenR/S.scale, 20, Math.max(S.cw,S.ch)*1.5);
+      glRender();renderRing();
+    }
+    return;
+  }
+  // ── Picker drag
+  if(S.drag){
+    const{id,mx0,my0,ox,oy}=S.drag;
+    const p=S.points.find(p=>p.id===id);
+    if(p){
+      p.x=clamp(ox+(e.clientX-mx0)/(S.cw*S.scale),0,1);
+      p.y=clamp(oy+(e.clientY-my0)/(S.ch*S.scale),0,1);
+      glRender();renderPickers();renderRing();
+    }
   }
 });
-document.addEventListener('mouseup',()=>{if(S.drag){S.drag=null;renderList();}});
 
-/* ════════════════════════════
+document.addEventListener('mouseup',()=>{
+  if(S.radiusDrag){S.radiusDrag=null;return;}
+  if(S.drag){S.drag=null;renderList();}
+});
+
+/* ════════════════════════════════
    TOOLS
-════════════════════════════ */
+════════════════════════════════ */
 function setTool(t){
   S.tool=t;
   document.querySelectorAll('.tool-btn').forEach(b=>b.classList.remove('active'));
@@ -1060,11 +1101,18 @@ function setTool(t){
   badge._to=setTimeout(()=>badge.classList.remove('visible'),1600);
 }
 
-/* ════════════════════════════
-   ANIMATION
-════════════════════════════ */
-let raf=null;
+/* ════════════════════════════════
+   HARDNESS
+════════════════════════════════ */
+function onHardness(){
+  S.hardness=+document.getElementById('hardness').value;
+  glRender();
+}
 
+/* ════════════════════════════════
+   ANIMATION
+════════════════════════════════ */
+let raf=null;
 function onAnimToggle(){
   S.animOn=document.getElementById('animOn').checked;
   const ctrl=document.getElementById('animCtrl');
@@ -1072,7 +1120,6 @@ function onAnimToggle(){
   ctrl.style.pointerEvents=S.animOn?'all':'none';
   if(S.animOn)startAnim();else stopAnim();
 }
-
 function startAnim(){
   if(raf)return;
   S.lastTs=performance.now();
@@ -1085,20 +1132,14 @@ function startAnim(){
   }
   raf=requestAnimationFrame(loop);
 }
-
 function stopAnim(){
   if(raf){cancelAnimationFrame(raf);raf=null;}
   glRender();renderPickers();
 }
 
-function onFalloff(){
-  S.falloff=+document.getElementById('falloff').value;
-  glRender();
-}
-
-/* ════════════════════════════
+/* ════════════════════════════════
    COMPOSITE
-════════════════════════════ */
+════════════════════════════════ */
 let compCv,compCtx;
 function ensureComp(){
   if(!compCv){compCv=document.createElement('canvas');compCtx=compCv.getContext('2d');}
@@ -1118,31 +1159,27 @@ function drawComposite(pts){
   }
 }
 
-/* ════════════════════════════
+/* ════════════════════════════════
    EXPORT
-════════════════════════════ */
+════════════════════════════════ */
 function exportJPG(){
   drawComposite();
-  const a=document.createElement('a');
-  a.download='mesh-gradient.jpg';
-  a.href=compCv.toDataURL('image/jpeg',+document.getElementById('jpgQ').value);
-  a.click();
+  const a=document.createElement('a');a.download='mesh-gradient.jpg';
+  a.href=compCv.toDataURL('image/jpeg',+document.getElementById('jpgQ').value);a.click();
 }
-
 function exportSVG(){
   const W=S.cw,H=S.ch;
   if(!S.points.length){alert('Add color points first!');return;}
   let ar=0,ag=0,ab=0;
   S.points.forEach(p=>{ar+=p.r;ag+=p.g;ab+=p.b;});
   ar=Math.round(ar/S.points.length*.25);ag=Math.round(ag/S.points.length*.25);ab=Math.round(ab/S.points.length*.25);
-  const R=Math.round(Math.max(W,H)*1.05);
   let defs='',layers='';
   S.points.forEach((p,i)=>{
     const cx=Math.round(p.x*W),cy=Math.round(p.y*H),hex=toHex(p.r,p.g,p.b);
-    defs+=`\n    <radialGradient id="mg${i}" cx="${cx}" cy="${cy}" r="${R}" gradientUnits="userSpaceOnUse">
+    const r=Math.round(p.radius);
+    defs+=`\n    <radialGradient id="mg${i}" cx="${cx}" cy="${cy}" r="${r}" gradientUnits="userSpaceOnUse">
       <stop offset="0%" stop-color="${hex}" stop-opacity="1"/>
-      <stop offset="40%" stop-color="${hex}" stop-opacity="0.7"/>
-      <stop offset="75%" stop-color="${hex}" stop-opacity="0.2"/>
+      <stop offset="50%" stop-color="${hex}" stop-opacity="0.6"/>
       <stop offset="100%" stop-color="${hex}" stop-opacity="0"/>
     </radialGradient>`;
     layers+=`\n  <rect width="${W}" height="${H}" fill="url(#mg${i})" style="mix-blend-mode:${i===0?'normal':'screen'}"/>`;
@@ -1159,7 +1196,6 @@ function exportSVG(){
   const a=document.createElement('a');a.download='mesh-gradient.svg';a.href=url;a.click();
   setTimeout(()=>URL.revokeObjectURL(url),60000);
 }
-
 function exportVideo(){
   if(!S.animOn){
     if(!confirm('Animation is off. Enable it and start recording?'))return;
@@ -1199,9 +1235,9 @@ function exportVideo(){
   setTimeout(()=>rec.stop(),dur*1000);
 }
 
-/* ════════════════════════════
+/* ════════════════════════════════
    HELPERS
-════════════════════════════ */
+════════════════════════════════ */
 function sv(el,id){document.getElementById(id).textContent=parseFloat(el.value).toFixed(2).replace(/\.?0+$/,'');}
 function svp(el,id){document.getElementById(id).textContent=Math.round(el.value*100)+'%';}
 function toggleSec(hdr){hdr.classList.toggle('collapsed');hdr.nextElementSibling.classList.toggle('hidden');}
@@ -1209,26 +1245,23 @@ function updateHUD(){
   document.getElementById('hud').textContent=`${S.cw} × ${S.ch} · ${S.points.length} point${S.points.length!==1?'s':''}`;
 }
 
-/* ════════════════════════════
-   KEYBOARD — Ctrl+S, Ctrl+A only (no D shortcut)
-════════════════════════════ */
+/* ════════════════════════════════
+   KEYBOARD
+════════════════════════════════ */
 document.addEventListener('keydown',e=>{
   const inInput=['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName);
-
-  // Ctrl+S = Select tool, Ctrl+A = Add tool
   if(e.ctrlKey&&!e.shiftKey&&!e.altKey){
     if(e.key==='s'||e.key==='S'){e.preventDefault();setTool('select');return;}
     if(e.key==='a'||e.key==='A'){e.preventDefault();setTool('add');return;}
   }
-
   if(inInput)return;
-  if(e.key==='Escape'){S.selId=null;renderPickers();renderList();}
+  if(e.key==='Escape'){S.selId=null;renderPickers();renderRing();renderList();}
   if((e.key==='Delete'||e.key==='Backspace')&&S.selId)removePoint(S.selId);
 });
 
-/* ════════════════════════════
+/* ════════════════════════════════
    INIT
-════════════════════════════ */
+════════════════════════════════ */
 function init(){
   initGL();
   glCv.width=grCv.width=S.cw;glCv.height=grCv.height=S.ch;
@@ -1240,11 +1273,17 @@ function init(){
     {x:.80,y:.78,r:255,g:175,b:65},
     {x:.50,y:.44,r:170,g:65,b:255},
   ].forEach(d=>{
-    S.points.push({id:S.nid++,...d,phX:Math.random()*Math.PI*2,phY:Math.random()*Math.PI*2,fm:.65+Math.random()*.7});
+    S.points.push({
+      id:S.nid++,...d,
+      radius:defaultRadius(),
+      phX:Math.random()*Math.PI*2,
+      phY:Math.random()*Math.PI*2,
+      fm:.65+Math.random()*.7,
+    });
   });
-  glRender();renderPickers();renderList();renderPalette();
+  glRender();renderPickers();renderRing();renderList();renderPalette();
   setColor(255,80,130);updateHUD();ensureComp();
-  window.addEventListener('resize',()=>{recalcScale();renderPickers();});
+  window.addEventListener('resize',()=>{recalcScale();renderPickers();renderRing();});
 }
 
 init();
